@@ -1,0 +1,24 @@
+repositories {  
+    mavenCentral()
+    mavenLocal()
+}
+
+apply plugin: 'java'
+apply plugin: 'jdepend'
+apply plugin: 'findbugs'
+
+tasks.withType(JDepend) {
+    reports {
+        xml.enabled = false
+        text.enabled = true
+    }
+ }
+
+dependencies {
+    testCompile 'junit:junit:4.0'
+    compile 'com.google.guava:guava:11.0.2'
+    compile 'me.donnior:fava:1.1'
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    compile 'org.slf4j:slf4j-log4j12:1.7.5'
+    
+}
