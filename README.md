@@ -20,10 +20,13 @@ Make fun with JSON serializer.
     //to json
     String json = new JSONBuilder(model).build();
 
+    //or write to stream, not implemented yet
+    new JSONBuilder(model).build(writer);
+
 ```    
 Where `AccountEntity` implement `EntityModel` interface and defined fields will be exposed to json result.
 
-```
+```java
   public class AccountEntity implements EntityModel<Account>{
 
     public void config(Account account, FieldExposer exposer, Environment env) {
