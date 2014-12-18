@@ -1,4 +1,6 @@
-package io.github.agilej.jsonty;
+package io.github.agilej.jsonty.support;
+
+import io.github.agilej.jsonty.Environment;
 
 import java.util.HashMap;
 import java.util.Map;

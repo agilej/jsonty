@@ -1,4 +1,8 @@
-package io.github.agilej.jsonty;
+package io.github.agilej.jsonty.support;
+
+import io.github.agilej.jsonty.FieldExposer;
+import io.github.agilej.jsonty.JSONModel;
+import io.github.agilej.jsonty.ScopedFieldBuilder;
 
 /**
  * 

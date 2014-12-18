@@ -1,8 +1,6 @@
 package io.github.agilej.jsonty.test;
 
-import io.github.agilej.jsonty.AbstractJSONMoel;
 import io.github.agilej.jsonty.Environment;
-import io.github.agilej.jsonty.Environments;
 import io.github.agilej.jsonty.JSONModel;
 import io.github.agilej.jsonty.JSONBuilder;
 import io.github.agilej.jsonty.mapping.DetailedUserEntity;
@@ -11,6 +9,8 @@ import io.github.agilej.jsonty.mapping.SummaryUserEntity;
 import io.github.agilej.jsonty.model.Post;
 import io.github.agilej.jsonty.model.Profile;
 import io.github.agilej.jsonty.model.User;
+import io.github.agilej.jsonty.support.AbstractJSONMoel;
+import io.github.agilej.jsonty.support.Environments;
 
 import java.util.ArrayList;
 import java.util.HashMap;

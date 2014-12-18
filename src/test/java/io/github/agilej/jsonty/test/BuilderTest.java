@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import io.github.agilej.jsonty.AbstractJSONMoel;
 import io.github.agilej.jsonty.Environment;
-import io.github.agilej.jsonty.Environments;
 import io.github.agilej.jsonty.JSONModel;
 import io.github.agilej.jsonty.JSONBuilder;
+import io.github.agilej.jsonty.support.AbstractJSONMoel;
+import io.github.agilej.jsonty.support.Environments;
 
 import org.junit.Test;
 

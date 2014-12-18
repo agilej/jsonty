@@ -1,4 +1,4 @@
-package io.github.agilej.jsonty;
+package io.github.agilej.jsonty.util;
 
 public class StringUtil {
 
