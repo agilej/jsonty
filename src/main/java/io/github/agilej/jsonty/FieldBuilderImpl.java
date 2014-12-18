@@ -5,12 +5,16 @@ import io.github.agilej.jsonty.util.StringUtil;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import me.donnior.fava.FList;
+import me.donnior.fava.Function;
+
 import com.google.common.base.Joiner;
+
+import static me.donnior.fava.util.FLists.*;
 
 @SuppressWarnings("rawtypes")
 
@@ -138,8 +142,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
         }
 
         if(value instanceof String){
-//            return StringUtil.quote(value.toString());
-            return StringUtil.quote(value.toString());      //TODO is this enough? like string \" escaping?
+            return StringUtil.quote(value.toString());
         }
         
         if(!isValueIterable() && hasEntityType()){
@@ -161,33 +164,55 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
         return StringUtil.quote(value.toString());
     }
 
+    /**
+     * json value for a map present
+     * 
+     */
     @SuppressWarnings({"unchecked" })
     private Object _map(Object value) {
         //TODO map data, for map data, should disable entity mapping, 
         //can explicit set hasEntityType to false
-        Iterator<Entry<Object, Object>> it = ((Map)value).entrySet().iterator();
+        Map map = (Map)value;
         StringBuilder sb = new StringBuilder();
         sb.append("{");
+        
+        /*   
         List<String> collector = new ArrayList<String>();
+        Iterator<Entry<Object, Object>> it = map.entrySet().iterator();
         while(it.hasNext()){
             Entry<Object, Object>  entry = it.next();
             collector.add(contentWithNameAndValue(entry.getKey(),   entry.getValue(), true));
         }
+        */
+        
+        FList<String> collector = $(map.entrySet()).map(new Function<Entry<Object, Object>, String>() {
+            @Override
+            public String apply(Entry<Object, Object> entry) {
+                return contentWithNameAndValue(entry.getKey(),   entry.getValue(), true);
+            }
+        });
+        
         sb.append(Joiner.on(",").join(collector));
         sb.append("}");
         return sb.toString();
     }
 
-    //json value for collection represent
+    /**
+     * json value for collection represent
+     */
     @SuppressWarnings({"unchecked" })
     private Object _collection(Object value) {
-        //TODO data with normal type, fall back to gson
-        boolean hasEntityType = this.hasEntityType();
+        //TODO data with normal type, fall back to gson?
+        
+        Collection collection = (Collection)value;
+        
+        final boolean hasEntityType = this.hasEntityType();
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         
+        /*
         List<Object> values = new ArrayList<Object>();
-        Iterator<Object> it = ((Collection)value).iterator();
+        Iterator<Object> it = collection.iterator();
         while(it.hasNext()){
             if(hasEntityType){
                 values.add(buildEntity(it.next(), this.entityClass));
@@ -195,17 +220,31 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
                 values.add(value0(it.next()));
             }
         }
+        */
+        
+        List<Object> values = $(collection).map(new Function<Object, Object>(){
+            @Override
+            public Object apply(Object value) {
+                return hasEntityType ? buildEntity(value, entityClass) : value0(value);
+            }
+            
+        });
+        
         sb.append(Joiner.on(",").join(values));
         sb.append("]");
         return sb.toString();
     }
 
-    //json value for array represent
+    /**
+     * json value for array represent
+     * 
+     */
     private Object _array(Object value) {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-        int length = Array.getLength(value);
+        
         List<Object> values = new ArrayList<Object>();
+        int length = Array.getLength(value);
         for (int i = 0; i < length; i ++) {
             Object arrayElement = Array.get(value, i);
             if(hasEntityType()){
@@ -214,11 +253,17 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
                 values.add(value0(arrayElement));
             }
         }
+        
         sb.append(Joiner.on(",").join(values));
         sb.append("]");
         return sb.toString();
     }
     
+    /**
+     * 
+     * json value for a customized entity type present
+     * 
+     */
     @SuppressWarnings({"unchecked" })
     private Object buildEntity(Object value, Class<? extends SrapeEntity> clz) {
         try {

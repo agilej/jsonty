@@ -10,42 +10,22 @@ public class JSONBuilder {
 
     private FieldsExpositionHolder jsonDefinition = new FieldsExpositionHolder();
     
-    
-    public JSONBuilder(JSONModel module) {
-        module.config(this.jsonDefinition);
+    public JSONBuilder(JSONModel model) {
+        model.config(this.jsonDefinition);
     }
 
+    /**
+     * build final json result
+     * 
+     */
     public String build() {
         return this.jsonDefinition.build();
-//        final StringBuilder sb = new StringBuilder();
-//        
-//        boolean isAPureArrayDefinition = isAPureArrayDefinition();
-//        if(!isAPureArrayDefinition){
-//            sb.append("{");
-//        }
-//        
-//        FList<FieldBuilderImpl> fieldBuildersNeedExpose = this.getFieldsExposeDefinition().select(new Predicate<FieldBuilderImpl>() {
-//            @Override
-//            public boolean apply(FieldBuilderImpl fieldBuilder) {
-//                return fieldBuilder.conditionMatched();
-//            }
-//        });
-//
-//        FList<String> fieldStrings = fieldBuildersNeedExpose.map(new Function<FieldBuilderImpl, String>() {
-//            @Override
-//            public String apply(FieldBuilderImpl fieldBuilder) {
-//                return fieldBuilder.toJson();
-//            }
-//        });
-//        
-//        sb.append(Joiner.on(",").join(fieldStrings));
-//        
-//        if(!isAPureArrayDefinition){
-//            sb.append("}");
-//        }
-//        return sb.toString();
     }
 
+    /**
+     * whether this json model is a pure array data
+     * 
+     */
     public boolean isAPureArrayDefinition() {
         return this.jsonDefinition.isAPureArrayDefinition();
     }

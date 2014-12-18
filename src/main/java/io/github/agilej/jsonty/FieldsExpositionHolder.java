@@ -12,9 +12,9 @@ public class FieldsExpositionHolder implements FieldExposer{
     private FList<FieldBuilderImpl> fieldsDefinition = FLists.newEmptyList();
     
     public ScopedFieldBuilder expose(Object value){
-        FieldBuilderImpl sjb = new FieldBuilderImpl(value);
-        this.fieldsDefinition.add(sjb);
-        return sjb;
+        FieldBuilderImpl fieldBuilder = new FieldBuilderImpl(value);
+        this.fieldsDefinition.add(fieldBuilder);
+        return fieldBuilder;
     }
     
     public int fieldsCount(){
@@ -25,6 +25,9 @@ public class FieldsExpositionHolder implements FieldExposer{
         return this.fieldsDefinition;
     }
 
+    /**
+     * build final json result 
+     */
     public String build() {
         final StringBuilder sb = new StringBuilder();
         
