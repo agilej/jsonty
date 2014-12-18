@@ -18,7 +18,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
 
     private String name;
     private Object value;
-    private Class<? extends SrapeEntity> clz;
+    private Class<? extends SrapeEntity> entityClass;
 
     private boolean condition;
     private boolean hasConditon;
@@ -32,7 +32,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
     public ConditionalFieldBuilder withNameAndType(String name, Class<? extends SrapeEntity> entityClass) {
         this.hasName = true;
         this.name = name;
-        this.clz = entityClass;
+        this.entityClass = entityClass;
         return this;
     }
 
@@ -42,7 +42,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
     
     public ConditionalFieldBuilder withType(Class<? extends SrapeEntity> entityClass) {
         this.hasName = false;
-        this.clz = entityClass;
+        this.entityClass = entityClass;
         return this;        
     }
     
@@ -57,7 +57,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
     }
     
     public Class<? extends SrapeEntity> getEntityClass(){
-        return this.clz;
+        return this.entityClass;
     }
     
     /**
@@ -68,7 +68,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
      */
     public boolean hasEntityType(){
 //        return this.clz != null && !this.isMapValue();
-        return this.clz != null;
+        return this.entityClass != null;
     }
 
     public boolean isMapValue(){
@@ -139,11 +139,11 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
 
         if(value instanceof String){
 //            return StringUtil.quote(value.toString());
-            return quote(value.toString());      //TODO is this enough? like string \" escaping?
+            return StringUtil.quote(value.toString());      //TODO is this enough? like string \" escaping?
         }
         
         if(!isValueIterable() && hasEntityType()){
-            return buildEntity(this.value,this.clz);
+            return buildEntity(this.value,this.entityClass);
         }
         
         if(isArrayValue()) {
@@ -158,7 +158,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
             return _map(value);
         } 
         
-        return quote(value.toString());
+        return StringUtil.quote(value.toString());
     }
 
     @SuppressWarnings({"unchecked" })
@@ -190,7 +190,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
         Iterator<Object> it = ((Collection)value).iterator();
         while(it.hasNext()){
             if(hasEntityType){
-                values.add(buildEntity(it.next(), this.clz));
+                values.add(buildEntity(it.next(), this.entityClass));
             } else {
                 values.add(value0(it.next()));
             }
@@ -209,7 +209,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
         for (int i = 0; i < length; i ++) {
             Object arrayElement = Array.get(value, i);
             if(hasEntityType()){
-                values.add(buildEntity(arrayElement, this.clz));
+                values.add(buildEntity(arrayElement, this.entityClass));
             } else {
                 values.add(value0(arrayElement));
             }
@@ -254,57 +254,4 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
         return this.isValueIterable() && !hasName();
     }
     
-    public static String quote(String string) {
-        if (string == null || string.length() == 0) {
-            return "\"\"";
-        }
-
-        char         c = 0;
-        int          i;
-        int          len = string.length();
-        StringBuilder sb = new StringBuilder(len + 4);
-        String       t;
-
-        sb.append('"');
-        for (i = 0; i < len; i += 1) {
-            c = string.charAt(i);
-            switch (c) {
-            case '\\':
-            case '"':
-                sb.append('\\');
-                sb.append(c);
-                break;
-            case '/':
-//                if (b == '<') {
-                    sb.append('\\');
-//                }
-                sb.append(c);
-                break;
-            case '\b':
-                sb.append("\\b");
-                break;
-            case '\t':
-                sb.append("\\t");
-                break;
-            case '\n':
-                sb.append("\\n");
-                break;
-            case '\f':
-                sb.append("\\f");
-                break;
-            case '\r':
-               sb.append("\\r");
-               break;
-            default:
-                if (c < ' ') {
-                    t = "000" + Integer.toHexString(c);
-                    sb.append("\\u" + t.substring(t.length() - 4));
-                } else {
-                    sb.append(c);
-                }
-            }
-        }
-        sb.append('"');
-        return sb.toString();
-    }
 }
