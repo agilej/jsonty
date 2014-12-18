@@ -30,8 +30,8 @@ Where `AccountEntity` implement `EntityModel` interface and defined fields will 
   public class AccountEntity implements EntityModel<Account>{
 
     public void config(Account account, FieldExposer exposer, Environment env) {
-        exposer.expose(post.getLogin()).withName("loginName");
-        exposer.expose(post.getAvatar()).withName("avatar");
+        exposer.expose(account.getLogin()).withName("loginName");
+        exposer.expose(account.getAvatar()).withName("avatar");
 
         //you can use nested SrapeEntity too
         exposer.expose(account.getProfile()).withNameAndType("profile", ProfileEntity.class);
