@@ -12,6 +12,8 @@ import java.util.Map.Entry;
 
 import com.google.common.base.Joiner;
 
+@SuppressWarnings("rawtypes")
+
 public class FieldBuilderImpl implements ScopedFieldBuilder{
 
     private String name;
@@ -159,6 +161,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
         return quote(value.toString());
     }
 
+    @SuppressWarnings({"unchecked" })
     private Object _map(Object value) {
         //TODO map data, for map data, should disable entity mapping, 
         //can explicit set hasEntityType to false
@@ -176,6 +179,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
     }
 
     //json value for collection represent
+    @SuppressWarnings({"unchecked" })
     private Object _collection(Object value) {
         //TODO data with normal type, fall back to gson
         boolean hasEntityType = this.hasEntityType();
@@ -215,7 +219,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
         return sb.toString();
     }
     
-    
+    @SuppressWarnings({"unchecked" })
     private Object buildEntity(Object value, Class<? extends SrapeEntity> clz) {
         try {
             SrapeEntity entity = clz.newInstance();

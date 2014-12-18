@@ -98,6 +98,7 @@ public class FieldBuilderImplTest {
         assertFalse(fieldBuilder.isCollectionValue());
     }
     
+    @SuppressWarnings("rawtypes")
     @Test
     public void test_has_entity_type(){
         FieldBuilderImpl fieldBuilder = new FieldBuilderImpl(FLists.create(1,2,3));

@@ -18,6 +18,7 @@ public class MapBasedEnviroment implements Environment{
         return this.map.containsKey(key);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Object get(String key) {
         return this.map.get(key);

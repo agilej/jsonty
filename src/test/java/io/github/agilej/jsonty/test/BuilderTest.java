@@ -1,16 +1,12 @@
 package io.github.agilej.jsonty.test;
 
 import static org.junit.Assert.assertEquals;
+import io.github.agilej.jsonty.JSONBuilder;
+import io.github.agilej.jsonty.JSONModel;
+import io.github.agilej.jsonty.support.AbstractJSONMoel;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import io.github.agilej.jsonty.Environment;
-import io.github.agilej.jsonty.JSONModel;
-import io.github.agilej.jsonty.JSONBuilder;
-import io.github.agilej.jsonty.support.AbstractJSONMoel;
-import io.github.agilej.jsonty.support.Environments;
 
 import org.junit.Test;
 
@@ -50,11 +46,10 @@ public class BuilderTest {
     @Test
   public void testStringEscape(){
       final String name = "\"foo\" is not \"bar\". specials: \b\r\n\f\t\\/";
-      
-      Environment env = Environments.envFromMap(new HashMap<String, Object>());
+     
       JSONModel module = new AbstractJSONMoel() {
           public void config() {
-              expose(name).withName("login").plusEnv(null);     //string
+              expose(name).withName("login");     //string
           }
       };
       

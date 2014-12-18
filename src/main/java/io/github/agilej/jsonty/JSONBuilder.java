@@ -46,9 +46,8 @@ public class JSONBuilder {
 //        return sb.toString();
     }
 
-    private boolean isAPureArrayDefinition() {
-        return this.fieldsExposeDefinitionCount() == 1 &&
-                this.getFieldsExposeDefinition().at(0).isPureIterableValue();
+    public boolean isAPureArrayDefinition() {
+        return this.jsonDefinition.isAPureArrayDefinition();
     }
     
     public int fieldsExposeDefinitionCount(){
