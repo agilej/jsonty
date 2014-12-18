@@ -121,7 +121,6 @@ class ExampleEntity implements SrapeEntity<Integer>{
 
     @Override
     public void config(Integer object, FieldExposer exposer, Environment env) {
-        // TODO Auto-generated method stub
         
     }
     

@@ -1,7 +1,19 @@
 package io.github.agilej.jsonty;
 
-
-public abstract class AbstractFieldExposerModule implements FieldExposerModule{
+/**
+ * 
+ * AbstractJSONModel which can be used for convenience.
+ * 
+ * <pre>
+ * JSONModel model = new AbstractJSONMoel(){
+ *     void config(){
+ *       expose(1).withName("int");
+ *       expose("one").withName("string"); 
+ *     }
+ * }
+ * </pre>
+ */
+public abstract class AbstractJSONMoel implements JSONModel{
 
     private FieldExposer exposer;
     

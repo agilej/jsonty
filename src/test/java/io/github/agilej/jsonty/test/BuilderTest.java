@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import io.github.agilej.jsonty.AbstractFieldExposerModule;
+import io.github.agilej.jsonty.AbstractJSONMoel;
 import io.github.agilej.jsonty.Environment;
 import io.github.agilej.jsonty.Environments;
-import io.github.agilej.jsonty.FieldExposerModule;
+import io.github.agilej.jsonty.JSONModel;
 import io.github.agilej.jsonty.JSONBuilder;
 
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class BuilderTest {
         final float f = 1.23f;
         final double d = 1.25d;
         
-        FieldExposerModule module = new AbstractFieldExposerModule() {
+        JSONModel module = new AbstractJSONMoel() {
             public void config() {
                 expose(age).withName("int");        //int
                 expose('a').withName("char");       //char
@@ -52,7 +52,7 @@ public class BuilderTest {
       final String name = "\"foo\" is not \"bar\". specials: \b\r\n\f\t\\/";
       
       Environment env = Environments.envFromMap(new HashMap<String, Object>());
-      FieldExposerModule module = new AbstractFieldExposerModule() {
+      JSONModel module = new AbstractJSONMoel() {
           public void config() {
               expose(name).withName("login").plusEnv(null);     //string
           }
@@ -69,7 +69,7 @@ public class BuilderTest {
 //    @Ignore
     public void testArrayWithPrimaryTypes(){
         
-        FieldExposerModule module = new AbstractFieldExposerModule() {
+        JSONModel module = new AbstractJSONMoel() {
             public void config() {
                 expose(new int[]{1,2,3}).withName("ints");        //ints
                 expose(new String[]{"one","two","three2"}).withName("strings");        //strings
@@ -86,7 +86,7 @@ public class BuilderTest {
 //    @Ignore
     public void testCollectionWithPrimaryTypes(){
         
-        FieldExposerModule module = new AbstractFieldExposerModule() {
+        JSONModel module = new AbstractJSONMoel() {
             public void config() {
                 expose(Lists.newArrayList(1,2,3)).withName("ints");        //ints
                 expose(Lists.newArrayList("one","two","three")).withName("strings");        //strings
@@ -106,7 +106,7 @@ public class BuilderTest {
         map.put("name", "jam\"es");
         map.put("age", 18);
         
-        FieldExposerModule module = new AbstractFieldExposerModule() {
+        JSONModel module = new AbstractJSONMoel() {
             public void config() {
                 expose(map).withName("map");        //map
             }
@@ -120,7 +120,7 @@ public class BuilderTest {
     @Test
 //  @Ignore
   public void testOnlyOneCollectionDataWithName(){
-      FieldExposerModule module = new AbstractFieldExposerModule() {
+      JSONModel module = new AbstractJSONMoel() {
           public void config() {
               expose(Lists.newArrayList(1,2,3)).withName(null);        //ints
           }
@@ -134,7 +134,7 @@ public class BuilderTest {
     @Test
 //  @Ignore
   public void testOnlyOneCollectionDataWithoutName(){
-      FieldExposerModule module = new AbstractFieldExposerModule() {
+      JSONModel module = new AbstractJSONMoel() {
           public void config() {
               expose(Lists.newArrayList(1,-2,3));
           }
@@ -148,7 +148,7 @@ public class BuilderTest {
     @Test
 //  @Ignore
   public void test_null_value(){
-      FieldExposerModule module = new AbstractFieldExposerModule() {
+      JSONModel module = new AbstractJSONMoel() {
           public void config() {
               expose(null).withName("null");
           }
@@ -162,7 +162,7 @@ public class BuilderTest {
     @Test
 //  @Ignore
   public void test_bool_value(){
-      FieldExposerModule module = new AbstractFieldExposerModule() {
+      JSONModel module = new AbstractJSONMoel() {
           public void config() {
               expose(true).withName("bool");
           }
@@ -173,7 +173,7 @@ public class BuilderTest {
       System.out.println(build(module));
   }
 
-    private String build(FieldExposerModule module){
+    private String build(JSONModel module){
         return new JSONBuilder(module).build();
     }
     

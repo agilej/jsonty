@@ -4,14 +4,14 @@ import me.donnior.fava.FList;
 
 /**
  * 
- * Build JSON with one {@link FieldExposerModule}, this class is not thread safe!
+ * Build JSON with one {@link JSONModel}, this class is not thread safe!
  */
 public class JSONBuilder {
 
     private FieldsExpositionHolder jsonDefinition = new FieldsExpositionHolder();
     
     
-    public JSONBuilder(FieldExposerModule module) {
+    public JSONBuilder(JSONModel module) {
         module.config(this.jsonDefinition);
     }
 

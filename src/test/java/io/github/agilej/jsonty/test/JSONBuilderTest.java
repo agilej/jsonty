@@ -11,7 +11,7 @@ import java.util.List;
 import io.github.agilej.jsonty.Environment;
 import io.github.agilej.jsonty.FieldBuilderImpl;
 import io.github.agilej.jsonty.FieldExposer;
-import io.github.agilej.jsonty.FieldExposerModule;
+import io.github.agilej.jsonty.JSONModel;
 import io.github.agilej.jsonty.JSONBuilder;
 import io.github.agilej.jsonty.SrapeEntity;
 import io.github.agilej.jsonty.model.User;
@@ -43,7 +43,7 @@ public class JSONBuilderTest {
     
     @Test
     public void test_build(){
-        JSONBuilder builder = new JSONBuilder(new FieldExposerModule() {
+        JSONBuilder builder = new JSONBuilder(new JSONModel() {
             @Override
             public void config(FieldExposer exposer) {
                 exposer.expose("donny").withName("user").when(2 > 1);
@@ -79,7 +79,7 @@ class Controller{
         final Account account = null;
         final int age = 20;
         
-        return new JSONBuilder(new FieldExposerModule() {
+        return new JSONBuilder(new JSONModel() {
             @Override
             public void config(FieldExposer exposer) {
                 exposer.expose(users).withName("users").when(age > 76);

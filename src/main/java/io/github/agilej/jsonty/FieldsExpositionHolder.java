@@ -17,6 +17,10 @@ public class FieldsExpositionHolder implements FieldExposer{
         return sjb;
     }
     
+    public int fieldsCount(){
+        return fieldsExposeDefinition().size();
+    }
+    
     public FList<FieldBuilderImpl> fieldsExposeDefinition(){
         return this.fieldsDefinition;
     }
@@ -51,7 +55,7 @@ public class FieldsExpositionHolder implements FieldExposer{
         return sb.toString();
     }
     
-    private boolean isAPureArrayDefinition() {
+    public boolean isAPureArrayDefinition() {
         return this.fieldsExposeDefinition().size() == 1 &&
                 this.fieldsExposeDefinition().at(0).isPureIterableValue();
     }

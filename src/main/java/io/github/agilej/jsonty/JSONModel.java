@@ -1,6 +1,6 @@
 package io.github.agilej.jsonty;
 
-public interface FieldExposerModule {
+public interface JSONModel {
 
     void config(FieldExposer exposer);
     

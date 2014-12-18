@@ -1,9 +1,9 @@
 package io.github.agilej.jsonty.test;
 
-import io.github.agilej.jsonty.AbstractFieldExposerModule;
+import io.github.agilej.jsonty.AbstractJSONMoel;
 import io.github.agilej.jsonty.Environment;
 import io.github.agilej.jsonty.Environments;
-import io.github.agilej.jsonty.FieldExposerModule;
+import io.github.agilej.jsonty.JSONModel;
 import io.github.agilej.jsonty.JSONBuilder;
 import io.github.agilej.jsonty.mapping.DetailedUserEntity;
 import io.github.agilej.jsonty.mapping.PostEntity;
@@ -30,7 +30,7 @@ public class SrapeEntityTest {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("isAdmin", true);
         final Environment env = Environments.envFromMap(map);
-        FieldExposerModule module = new AbstractFieldExposerModule() {
+        JSONModel module = new AbstractJSONMoel() {
             public void config() {
                 expose(user).withNameAndType("user", SummaryUserEntity.class).plusEnv(env);
             }
@@ -43,7 +43,7 @@ public class SrapeEntityTest {
     public void test_srape_entity_value_2() {
         final User user = domainUser();
 
-        FieldExposerModule module = new AbstractFieldExposerModule() {
+        JSONModel module = new AbstractJSONMoel() {
             public void config() {
                 expose(user).withNameAndType("user", DetailedUserEntity.class);
             }
@@ -56,7 +56,7 @@ public class SrapeEntityTest {
     public void test_srape_entity_value_3() {
         final User user = domainUser();
 
-        FieldExposerModule module = new AbstractFieldExposerModule() {
+        JSONModel module = new AbstractJSONMoel() {
             public void config() {
                 expose(user.posts).withType(PostEntity.class);
             }
@@ -74,7 +74,7 @@ public class SrapeEntityTest {
         map.put("user", user);
         map.put("num", 1);
         
-        FieldExposerModule module = new AbstractFieldExposerModule() {
+        JSONModel module = new AbstractJSONMoel() {
             public void config() {
                 expose(map).withNameAndType("res", PostEntity.class);
             }
@@ -101,7 +101,7 @@ public class SrapeEntityTest {
         return user;
     }
 
-    private String build(FieldExposerModule module) {
+    private String build(JSONModel module) {
         return new JSONBuilder(module).build();
     }
 
