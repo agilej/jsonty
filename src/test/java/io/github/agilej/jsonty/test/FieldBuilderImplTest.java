@@ -13,7 +13,7 @@ import me.donnior.fava.util.FLists;
 import io.github.agilej.jsonty.Environment;
 import io.github.agilej.jsonty.FieldBuilderImpl;
 import io.github.agilej.jsonty.FieldExposer;
-import io.github.agilej.jsonty.SrapeEntity;
+import io.github.agilej.jsonty.EntityModel;
 import io.github.agilej.jsonty.mapping.DetailedUserEntity;
 
 import org.junit.Test;
@@ -118,7 +118,7 @@ public class FieldBuilderImplTest {
 }
 
 
-class ExampleEntity implements SrapeEntity<Integer>{
+class ExampleEntity implements EntityModel<Integer>{
 
     @Override
     public void config(Integer object, FieldExposer exposer, Environment env) {

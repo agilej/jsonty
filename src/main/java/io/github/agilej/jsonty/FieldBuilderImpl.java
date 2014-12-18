@@ -22,7 +22,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
 
     private String name;
     private Object value;
-    private Class<? extends SrapeEntity> entityClass;
+    private Class<? extends EntityModel> entityClass;
 
     private boolean condition;
     private boolean hasConditon;
@@ -33,7 +33,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
         this.value = value;
     }
 
-    public ConditionalFieldBuilder withNameAndType(String name, Class<? extends SrapeEntity> entityClass) {
+    public ConditionalFieldBuilder withNameAndType(String name, Class<? extends EntityModel> entityClass) {
         this.hasName = true;
         this.name = name;
         this.entityClass = entityClass;
@@ -44,7 +44,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
         return this.withNameAndType(string, null);        
     }
     
-    public ConditionalFieldBuilder withType(Class<? extends SrapeEntity> entityClass) {
+    public ConditionalFieldBuilder withType(Class<? extends EntityModel> entityClass) {
         this.hasName = false;
         this.entityClass = entityClass;
         return this;        
@@ -60,7 +60,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
         return name;
     }
     
-    public Class<? extends SrapeEntity> getEntityClass(){
+    public Class<? extends EntityModel> getEntityClass(){
         return this.entityClass;
     }
     
@@ -265,9 +265,9 @@ public class FieldBuilderImpl implements ScopedFieldBuilder{
      * 
      */
     @SuppressWarnings({"unchecked" })
-    private Object buildEntity(Object value, Class<? extends SrapeEntity> clz) {
+    private Object buildEntity(Object value, Class<? extends EntityModel> clz) {
         try {
-            SrapeEntity entity = clz.newInstance();
+            EntityModel entity = clz.newInstance();
             FieldsExpositionHolder holder = new FieldsExpositionHolder();
             entity.config(value, holder, env);
             return holder.build();

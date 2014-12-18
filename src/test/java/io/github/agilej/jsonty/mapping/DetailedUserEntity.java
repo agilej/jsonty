@@ -2,10 +2,10 @@ package io.github.agilej.jsonty.mapping;
 
 import io.github.agilej.jsonty.Environment;
 import io.github.agilej.jsonty.FieldExposer;
-import io.github.agilej.jsonty.SrapeEntity;
+import io.github.agilej.jsonty.EntityModel;
 import io.github.agilej.jsonty.model.User;
 
-public class DetailedUserEntity implements SrapeEntity<User>{
+public class DetailedUserEntity implements EntityModel<User>{
 
     @Override
     public void config(User user, FieldExposer exposer, Environment env) {

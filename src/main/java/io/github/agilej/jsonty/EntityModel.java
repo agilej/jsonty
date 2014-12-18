@@ -1,6 +1,6 @@
 package io.github.agilej.jsonty;
 
-public interface SrapeEntity<E> {
+public interface EntityModel<E> {
 
     public void config(E object, FieldExposer exposer, Environment env);
     

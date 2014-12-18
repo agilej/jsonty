@@ -13,7 +13,7 @@ import io.github.agilej.jsonty.FieldBuilderImpl;
 import io.github.agilej.jsonty.FieldExposer;
 import io.github.agilej.jsonty.JSONModel;
 import io.github.agilej.jsonty.JSONBuilder;
-import io.github.agilej.jsonty.SrapeEntity;
+import io.github.agilej.jsonty.EntityModel;
 import io.github.agilej.jsonty.model.User;
 
 import org.junit.Test;
@@ -62,7 +62,7 @@ class Account{
     Date loginAt;
 }
 
-class AccountEntity implements SrapeEntity<Account>{
+class AccountEntity implements EntityModel<Account>{
     
     @Override
     public void config(Account account, FieldExposer exposer, Environment env) {
