@@ -4,3 +4,11 @@ build
 .project
 .settings
 .classpath
+
+.idea
+
+jsonty.iml
+
+jsonty.ipr
+
+jsonty.iws
