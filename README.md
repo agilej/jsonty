@@ -33,7 +33,7 @@ Where `AccountEntity` implement `EntityModel` interface and defined fields will 
         exposer.expose(account.getLogin()).withName("loginName");
         exposer.expose(account.getAvatar()).withName("avatar");
 
-        //you can use nested SrapeEntity too
+        //you can use nested EntityModel too
         exposer.expose(account.getProfile()).withNameAndType("profile", ProfileEntity.class);
     }
 
