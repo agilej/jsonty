@@ -12,7 +12,6 @@ import org.agilej.jsonty.util.StringUtil;
 import me.donnior.fava.FList;
 import me.donnior.fava.Function;
 
-import com.google.common.base.Joiner;
 
 import static me.donnior.fava.util.FLists.*;
 
@@ -208,7 +207,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder, FieldExposeResult{
             }
         });
 
-        sb.append(Joiner.on(",").join(collector));
+        sb.append(StringUtil.join(collector, ","));
         sb.append("}");
         return sb.toString();
     }
@@ -246,7 +245,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder, FieldExposeResult{
 
         });
 
-        sb.append(Joiner.on(",").join(values));
+        sb.append(StringUtil.join(values, ","));
         sb.append("]");
         return sb.toString();
     }
@@ -270,7 +269,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder, FieldExposeResult{
             }
         }
 
-        sb.append(Joiner.on(",").join(values));
+        sb.append(StringUtil.join(values, ","));
         sb.append("]");
         return sb.toString();
     }

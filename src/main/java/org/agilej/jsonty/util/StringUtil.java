@@ -1,5 +1,7 @@
 package org.agilej.jsonty.util;
 
+import java.util.Iterator;
+
 public class StringUtil {
 
     public static String quote(String string) {
@@ -63,4 +65,19 @@ public class StringUtil {
         result.append(isValueAString ? quote(value.toString()) : value.toString());
         return result.toString();
     }
+
+    public static String join(Iterable iterable, String separator){
+        StringBuilder sb = new StringBuilder();
+        Iterator it = iterable.iterator();
+        if (it.hasNext()) {
+            sb.append(it.next().toString());
+            while (it.hasNext()) {
+                sb.append(separator);
+                sb.append(it.next().toString());
+            }
+        }
+        return sb.toString();
+    }
+
+
 }

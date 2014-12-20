@@ -18,7 +18,6 @@ import org.agilej.jsonty.FieldExposer;
 import org.agilej.jsonty.mapping.DetailedUserEntity;
 import org.junit.Test;
 
-import com.google.common.collect.Lists;
 
 public class FieldBuilderImplTest {
 
@@ -30,7 +29,7 @@ public class FieldBuilderImplTest {
         builder = new FieldBuilderImpl(2);
         assertEquals(2, builder.getValue());
         
-        List<String> object = Lists.newArrayList();
+        List<String> object = FLists.newEmptyList();
         builder = new FieldBuilderImpl(object);
         assertSame(object, builder.getValue());
     }

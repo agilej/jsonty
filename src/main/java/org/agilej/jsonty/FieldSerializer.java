@@ -1,6 +1,5 @@
 package org.agilej.jsonty;
 
-import com.google.common.base.Joiner;
 import me.donnior.fava.FList;
 import me.donnior.fava.Function;
 import org.agilej.jsonty.util.StringUtil;
@@ -105,7 +104,7 @@ public class FieldSerializer {
             }
         });
 
-        sb.append(Joiner.on(",").join(collector));
+        sb.append(StringUtil.join(collector, ","));
         sb.append("}");
         return sb.toString();
     }
@@ -143,7 +142,7 @@ public class FieldSerializer {
 
         });
 
-        sb.append(Joiner.on(",").join(values));
+        sb.append(StringUtil.join(values,","));
         sb.append("]");
         return sb.toString();
     }
@@ -167,7 +166,7 @@ public class FieldSerializer {
             }
         }
 
-        sb.append(Joiner.on(",").join(values));
+        sb.append(StringUtil.join(values, ","));
         sb.append("]");
         return sb.toString();
     }

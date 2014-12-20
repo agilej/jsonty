@@ -4,8 +4,7 @@ import me.donnior.fava.FList;
 import me.donnior.fava.Function;
 import me.donnior.fava.Predicate;
 import me.donnior.fava.util.FLists;
-
-import com.google.common.base.Joiner;
+import org.agilej.jsonty.util.StringUtil;
 
 public class FieldsExpositionHolder implements FieldExposer{
 
@@ -50,7 +49,7 @@ public class FieldsExpositionHolder implements FieldExposer{
             }
         });
         
-        sb.append(Joiner.on(",").join(fieldStrings));
+        sb.append(StringUtil.join(fieldStrings, ","));
         
         if(!isAPureArrayDefinition){
             sb.append("}");

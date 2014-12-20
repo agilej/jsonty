@@ -5,12 +5,12 @@ import static org.junit.Assert.assertEquals;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import me.donnior.fava.util.FLists;
 import org.agilej.jsonty.JSONBuilder;
 import org.agilej.jsonty.JSONModel;
 import org.agilej.jsonty.support.AbstractJSONMoel;
 import org.junit.Test;
 
-import com.google.common.collect.Lists;
 
 public class BuilderTest {
 
@@ -83,8 +83,8 @@ public class BuilderTest {
         
         JSONModel module = new AbstractJSONMoel() {
             public void config() {
-                expose(Lists.newArrayList(1,2,3)).withName("ints");        //ints
-                expose(Lists.newArrayList("one","two","three")).withName("strings");        //strings
+                expose(FLists.$(1, 2, 3)).withName("ints");        //ints
+                expose(FLists.$("one","two","three")).withName("strings");        //strings
                 
             }
         };
@@ -117,7 +117,7 @@ public class BuilderTest {
   public void testOnlyOneCollectionDataWithName(){
       JSONModel module = new AbstractJSONMoel() {
           public void config() {
-              expose(Lists.newArrayList(1,2,3)).withName(null);        //ints
+              expose(FLists.$(1, 2, 3)).withName(null);        //ints
           }
       };
       
@@ -131,7 +131,7 @@ public class BuilderTest {
   public void testOnlyOneCollectionDataWithoutName(){
       JSONModel module = new AbstractJSONMoel() {
           public void config() {
-              expose(Lists.newArrayList(1,-2,3));
+              expose(FLists.$(1, -2, 3));
           }
       };
       
