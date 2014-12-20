@@ -24,7 +24,7 @@ public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
     private Class<? extends EntityModel> entityClass;
 
     private boolean condition;
-    private boolean hasConditon;
+    private boolean hasCondition;
     private boolean hasName;
     private Environment env;
     
@@ -40,7 +40,7 @@ public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
     }
 
     public ConditionalFieldBuilder withName(String string) {
-        return this.withNameAndType(string, null);        
+        return this.withNameAndType(string, null);
     }
     
     public ConditionalFieldBuilder withType(Class<? extends EntityModel> entityClass) {
@@ -57,7 +57,7 @@ public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     @Override
@@ -71,14 +71,11 @@ public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
     }
     
     /**
-     * whether this field exposition has a valid entity type, not just set entity type manually,
-     * the value must a not Map value.
-     * 
-     * @return
+     * whether this field exposition has a valid entity type
+     *
      */
     @Override
     public boolean hasEntityType(){
-//        return this.clz != null && !this.isMapValue();
         return this.entityClass != null;
     }
 
@@ -107,17 +104,17 @@ public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
     }
     
     public void when(boolean condition){
-        this.hasConditon = true;
+        this.hasCondition = true;
         this.condition = condition;
     }
 
 
     public boolean conditionMatched(){
-        return hasConditon ? condition : true;
+        return hasCondition ? condition : true;
     }
 
     public boolean hasCondition(){
-        return hasConditon;
+        return hasCondition;
     }
 
     @Override
