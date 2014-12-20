@@ -32,7 +32,7 @@ public class FieldsExpositionHolder implements FieldExposer{
         
         boolean isAPureArrayDefinition = isAPureArrayDefinition();
         if(!isAPureArrayDefinition){
-            sb.append("{");
+            sb.append(JSONS.OBJECT_START);
         }
         
         FList<FieldBuilder> fieldBuildersNeedExpose = this.fieldsExposeDefinition().select(new Predicate<FieldBuilder>() {
@@ -49,10 +49,10 @@ public class FieldsExpositionHolder implements FieldExposer{
             }
         });
         
-        sb.append(StringUtil.join(fieldStrings, ","));
+        sb.append(StringUtil.join(fieldStrings, JSONS.FIELD_SEPARATOR));
         
         if(!isAPureArrayDefinition){
-            sb.append("}");
+            sb.append(JSONS.OBJECT_END);
         }
         return sb.toString();
     }

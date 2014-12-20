@@ -292,17 +292,22 @@ public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
     }
 
     /**
-     * Is this field exposition a pure iterable value? means it value is data type and don't have a
+     *
+     * According to the json specification, json data can be start with "{", or just "["  , the second form is
+     * called pure-iterable value in jsonty
+     *
+     * <br />
+     * <br />
+     *
+     * one field is a pure iterable value when it's value is iterable and don't have a
      * explicit name. You can't use {@link #withName(String)} or {@link #withNameAndType(String, Class)}
-     * to define a field exposition if you want to make it pure data, you can use {@link #withType(Class)}
-     * or just ignore the 'with' clause. 
+     * to define a field exposition if you want to make it pure-iterable, you can use {@link #withType(Class)}
+     * or just ignore the 'with' clause.
      * 
      * <br />
      * <br />
-     * 
+     *
      * If this field exposition is pure iterable, it would be output as <pre><code>[1,2,3]</code></pre>
-     * 
-     * 
      * Otherwise it will be output as <pre><code>{"name": xxxx}</code></pre>
      * 
      * @return
