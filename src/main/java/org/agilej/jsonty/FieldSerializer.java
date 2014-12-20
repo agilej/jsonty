@@ -21,6 +21,11 @@ import static me.donnior.fava.util.FLists.$;
  */
 public class FieldSerializer {
 
+    public static final String JSON_OBJECT_START = "{";
+    public static final String JSON_OBJECT_END = "}";
+    public static final String JSON_ARRAY_START = "[";
+    public static final String JSON_ARRAY_END = "]";
+
     private FieldExposeResult fieldExposeResult;
 
     public FieldSerializer(FieldExposeResult fieldExposeResult){
@@ -86,7 +91,7 @@ public class FieldSerializer {
         //can explicit set hasEntityType to false
         Map map = (Map)value;
         StringBuilder sb = new StringBuilder();
-        sb.append("{");
+        sb.append(JSON_OBJECT_START);
 
         /*
         List<String> collector = new ArrayList<String>();
@@ -105,7 +110,7 @@ public class FieldSerializer {
         });
 
         sb.append(StringUtil.join(collector, ","));
-        sb.append("}");
+        sb.append(JSON_OBJECT_END);
         return sb.toString();
     }
 
@@ -120,7 +125,7 @@ public class FieldSerializer {
 
         final boolean hasEntityType = fieldExposeResult.hasEntityType();
         StringBuilder sb = new StringBuilder();
-        sb.append("[");
+        sb.append(JSON_ARRAY_START);
 
         /*
         List<Object> values = new ArrayList<Object>();
@@ -142,8 +147,8 @@ public class FieldSerializer {
 
         });
 
-        sb.append(StringUtil.join(values,","));
-        sb.append("]");
+        sb.append(StringUtil.join(values, ","));
+        sb.append(JSON_ARRAY_END);
         return sb.toString();
     }
 
@@ -153,7 +158,7 @@ public class FieldSerializer {
      */
     private Object _array(Object value) {
         StringBuilder sb = new StringBuilder();
-        sb.append("[");
+        sb.append(JSON_ARRAY_START);
 
         List<Object> values = new ArrayList<Object>();
         int length = Array.getLength(value);
@@ -167,7 +172,7 @@ public class FieldSerializer {
         }
 
         sb.append(StringUtil.join(values, ","));
-        sb.append("]");
+        sb.append(JSON_ARRAY_END);
         return sb.toString();
     }
 

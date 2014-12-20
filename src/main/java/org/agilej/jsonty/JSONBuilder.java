@@ -34,7 +34,7 @@ public class JSONBuilder {
         return this.jsonDefinition.fieldsExposeDefinition().size();
     }
 
-    public FList<FieldBuilderImpl> getFieldsExposeDefinition() {
+    public FList<FieldBuilder> getFieldsExposeDefinition() {
         return this.jsonDefinition.fieldsExposeDefinition();
     }
 }

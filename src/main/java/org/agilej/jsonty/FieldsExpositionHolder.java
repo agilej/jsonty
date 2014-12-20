@@ -8,10 +8,10 @@ import org.agilej.jsonty.util.StringUtil;
 
 public class FieldsExpositionHolder implements FieldExposer{
 
-    private FList<FieldBuilderImpl> fieldsDefinition = FLists.newEmptyList();
+    private FList<FieldBuilder> fieldsDefinition = FLists.newEmptyList();
     
     public ScopedFieldBuilder expose(Object value){
-        FieldBuilderImpl fieldBuilder = new FieldBuilderImpl(value);
+        FieldBuilder fieldBuilder = new FieldBuilder(value);
         this.fieldsDefinition.add(fieldBuilder);
         return fieldBuilder;
     }
@@ -20,7 +20,7 @@ public class FieldsExpositionHolder implements FieldExposer{
         return fieldsExposeDefinition().size();
     }
     
-    public FList<FieldBuilderImpl> fieldsExposeDefinition(){
+    public FList<FieldBuilder> fieldsExposeDefinition(){
         return this.fieldsDefinition;
     }
 
@@ -35,16 +35,16 @@ public class FieldsExpositionHolder implements FieldExposer{
             sb.append("{");
         }
         
-        FList<FieldBuilderImpl> fieldBuildersNeedExpose = this.fieldsExposeDefinition().select(new Predicate<FieldBuilderImpl>() {
+        FList<FieldBuilder> fieldBuildersNeedExpose = this.fieldsExposeDefinition().select(new Predicate<FieldBuilder>() {
             @Override
-            public boolean apply(FieldBuilderImpl fieldBuilder) {
+            public boolean apply(FieldBuilder fieldBuilder) {
                 return fieldBuilder.conditionMatched();
             }
         });
 
-        FList<String> fieldStrings = fieldBuildersNeedExpose.map(new Function<FieldBuilderImpl, String>() {
+        FList<String> fieldStrings = fieldBuildersNeedExpose.map(new Function<FieldBuilder, String>() {
             @Override
-            public String apply(FieldBuilderImpl fieldBuilder) {
+            public String apply(FieldBuilder fieldBuilder) {
                 return fieldBuilder.toJson();
             }
         });

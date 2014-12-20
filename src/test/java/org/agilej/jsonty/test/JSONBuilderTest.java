@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.agilej.jsonty.EntityModel;
 import org.agilej.jsonty.Environment;
-import org.agilej.jsonty.FieldBuilderImpl;
+import org.agilej.jsonty.FieldBuilder;
 import org.agilej.jsonty.FieldExposer;
 import org.agilej.jsonty.JSONBuilder;
 import org.agilej.jsonty.JSONModel;
@@ -27,7 +27,7 @@ public class JSONBuilderTest {
         
         assertEquals(2, builder.fieldsExposeDefinitionCount());
         
-        FieldBuilderImpl impl = builder.getFieldsExposeDefinition().first();
+        FieldBuilder impl = builder.getFieldsExposeDefinition().first();
         assertEquals("users", impl.getName());
         assertFalse(impl.conditionMatched());
         assertNull(impl.getEntityClass());

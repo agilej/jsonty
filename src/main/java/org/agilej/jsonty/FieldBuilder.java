@@ -17,7 +17,7 @@ import static me.donnior.fava.util.FLists.*;
 
 @SuppressWarnings("rawtypes")
 
-public class FieldBuilderImpl implements ScopedFieldBuilder, FieldExposeResult{
+public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
 
     private String name;
     private Object value;
@@ -28,7 +28,7 @@ public class FieldBuilderImpl implements ScopedFieldBuilder, FieldExposeResult{
     private boolean hasName;
     private Environment env;
     
-    public FieldBuilderImpl(Object value) {
+    public FieldBuilder(Object value) {
         this.value = value;
     }
 

@@ -13,31 +13,31 @@ import me.donnior.fava.util.FLists;
 
 import org.agilej.jsonty.EntityModel;
 import org.agilej.jsonty.Environment;
-import org.agilej.jsonty.FieldBuilderImpl;
+import org.agilej.jsonty.FieldBuilder;
 import org.agilej.jsonty.FieldExposer;
 import org.agilej.jsonty.mapping.DetailedUserEntity;
 import org.junit.Test;
 
 
-public class FieldBuilderImplTest {
+public class FieldBuilderTest {
 
     @Test
     public void test_constructor(){
-        FieldBuilderImpl builder = new FieldBuilderImpl("a");
+        FieldBuilder builder = new FieldBuilder("a");
         assertEquals("a", builder.getValue());
         
-        builder = new FieldBuilderImpl(2);
+        builder = new FieldBuilder(2);
         assertEquals(2, builder.getValue());
         
         List<String> object = FLists.newEmptyList();
-        builder = new FieldBuilderImpl(object);
+        builder = new FieldBuilder(object);
         assertSame(object, builder.getValue());
     }
     
     @Test
     public void test_build_withName(){
 
-        FieldBuilderImpl fieldBuilder = new FieldBuilderImpl(FLists.create(1,2,3));
+        FieldBuilder fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
         
         fieldBuilder.withName("ids");
         
@@ -55,7 +55,7 @@ public class FieldBuilderImplTest {
         assertNull(fieldBuilder.getEntityClass());
         
         
-        fieldBuilder = new FieldBuilderImpl(new int[]{1,3,5});
+        fieldBuilder = new FieldBuilder(new int[]{1,3,5});
         fieldBuilder.withNameAndType("data", ExampleEntity.class);
 
         assertEquals("data", fieldBuilder.getName());
@@ -64,7 +64,7 @@ public class FieldBuilderImplTest {
     
     @Test
     public void test_condition(){
-        FieldBuilderImpl fieldBuilder = new FieldBuilderImpl(FLists.create(1,2,3));
+        FieldBuilder fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
         
         fieldBuilder.withName("ids");
         
@@ -87,27 +87,27 @@ public class FieldBuilderImplTest {
     
     @Test
     public void test_collection_value(){
-        FieldBuilderImpl fieldBuilder = new FieldBuilderImpl(FLists.create(1,2,3));
+        FieldBuilder fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
         assertTrue(fieldBuilder.isCollectionValue());
         
-        fieldBuilder = new FieldBuilderImpl(new int[]{1,3,5});
+        fieldBuilder = new FieldBuilder(new int[]{1,3,5});
         assertTrue(fieldBuilder.isValueIterable());
         
-        fieldBuilder = new FieldBuilderImpl(null);
+        fieldBuilder = new FieldBuilder(null);
         assertFalse(fieldBuilder.isCollectionValue());
     }
     
     @SuppressWarnings("rawtypes")
     @Test
     public void test_has_entity_type(){
-        FieldBuilderImpl fieldBuilder = new FieldBuilderImpl(FLists.create(1,2,3));
+        FieldBuilder fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
         
         assertFalse(fieldBuilder.hasEntityType());
         
         fieldBuilder.withNameAndType("name", DetailedUserEntity.class);
         assertTrue(fieldBuilder.hasEntityType());
         
-        fieldBuilder = new FieldBuilderImpl(new HashMap());
+        fieldBuilder = new FieldBuilder(new HashMap());
         
         assertFalse(fieldBuilder.hasEntityType());
         
