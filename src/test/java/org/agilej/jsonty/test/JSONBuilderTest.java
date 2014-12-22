@@ -68,10 +68,9 @@ public class JSONBuilderTest {
                 exposer.expose(account).withType(AccountEntity.class);
             }
         };
-
         String json = new JSONBuilder(model).build();
-        String expected = "{" + jsonPair("username", "donny", true) + "}";
 
+        String expected = "{" + jsonPair("username", "donny", true) + "}";
         assertEquals(expected, json);
 
     }
