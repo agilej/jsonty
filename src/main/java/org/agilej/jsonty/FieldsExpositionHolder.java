@@ -31,7 +31,8 @@ public class FieldsExpositionHolder implements FieldExposer{
         final StringBuilder sb = new StringBuilder();
         
         boolean isAPureArrayDefinition = isAPureArrayDefinition();
-        if(!isAPureArrayDefinition){
+        boolean isAPureEntityDefinition = isAPureEntityDefinition();
+        if((!isAPureArrayDefinition) && (!isAPureEntityDefinition)){
             sb.append(JSONS.OBJECT_START);
         }
         
@@ -50,8 +51,8 @@ public class FieldsExpositionHolder implements FieldExposer{
         });
         
         sb.append(StringUtil.join(fieldStrings, JSONS.FIELD_SEPARATOR));
-        
-        if(!isAPureArrayDefinition){
+
+        if((!isAPureArrayDefinition) && (!isAPureEntityDefinition)){
             sb.append(JSONS.OBJECT_END);
         }
         return sb.toString();
@@ -61,5 +62,10 @@ public class FieldsExpositionHolder implements FieldExposer{
         return this.fieldsExposeDefinition().size() == 1 &&
                 this.fieldsExposeDefinition().at(0).isPureIterableValue();
     }
-   
+
+    public boolean isAPureEntityDefinition() {
+        return this.fieldsExposeDefinition().size() == 1 &&
+                (!this.fieldsExposeDefinition().at(0).hasName()) && this.fieldsExposeDefinition().at(0).hasEntityType();
+    }
+
 }

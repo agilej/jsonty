@@ -14,6 +14,9 @@ import org.agilej.jsonty.FieldBuilder;
 import org.agilej.jsonty.FieldExposer;
 import org.agilej.jsonty.JSONBuilder;
 import org.agilej.jsonty.JSONModel;
+import org.agilej.jsonty.mapping.Account;
+import org.agilej.jsonty.mapping.AccountEntity;
+import org.agilej.jsonty.model.Controller;
 import org.agilej.jsonty.model.User;
 import org.junit.Test;
 
@@ -53,38 +56,29 @@ public class JSONBuilderTest {
         String expected = "{" + jsonPair("user", "donny", true) + "," + jsonPair("age", 23, false)+ "}";
         assertEquals(expected, builder.build());
     }
-}
 
+    @Test
+    public void test_build_with_only_entity(){
+        final Account account = new Account();
+        account.login = "donny";
 
-class Account{
-    String login;
-    Date loginAt;
-}
-
-class AccountEntity implements EntityModel<Account>{
-    
-    @Override
-    public void config(Account account, FieldExposer exposer, Environment env) {
-        exposer.expose(account.login).withName("users").when(1 > 76);
-        exposer.expose(account.loginAt).withNameAndType("account", AccountEntity.class);
-    }
-    
-}
-
-class Controller{
- 
-    JSONBuilder jsonResult(){
-        final List<User> users = null;
-        final Account account = null;
-        final int age = 20;
-        
-        return new JSONBuilder(new JSONModel() {
+        JSONModel model = new JSONModel() {
             @Override
             public void config(FieldExposer exposer) {
-                exposer.expose(users).withName("users").when(age > 76);
-                exposer.expose(account).withNameAndType("account", AccountEntity.class);
+                exposer.expose(account).withType(AccountEntity.class);
             }
-        });
+        };
+
+        String json = new JSONBuilder(model).build();
+        String expected = "{" + jsonPair("username", "donny", true) + "}";
+
+        assertEquals(expected, json);
+
     }
- 
 }
+
+
+
+
+
+
