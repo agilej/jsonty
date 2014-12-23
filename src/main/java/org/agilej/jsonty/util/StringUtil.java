@@ -58,11 +58,11 @@ public class StringUtil {
         return sb.toString();
     }
 
-    public static String jsonPair(String name, Object value, boolean isValueAString){
+    public static String jsonPair(String name, Object value, boolean treatValueAsString){
         StringBuilder result = new StringBuilder();
         result.append(quote(name));
         result.append(":");
-        result.append(isValueAString ? quote(value.toString()) : value.toString());
+        result.append(treatValueAsString ? quote(value.toString()) : value.toString());
         return result.toString();
     }
 

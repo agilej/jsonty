@@ -80,6 +80,7 @@ public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
     }
 
 
+    @Override
     public boolean isMapValue(){
         return this.value != null && this.value instanceof Map;
     }

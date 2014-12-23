@@ -9,6 +9,9 @@ import org.agilej.jsonty.mapping.AccountEntity;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FieldExpositionHolderTest {
 
     private FieldsExpositionHolder holder;
@@ -60,23 +63,23 @@ public class FieldExpositionHolderTest {
     @Test
     public void test_is_pure_entity_value(){
 
-        assertFalse(holder.isAPureEntityDefinition());
+        assertFalse(holder.isAPureObjectDefinition());
 
         holder.expose(1);
-        assertFalse(holder.isAPureEntityDefinition());
+        assertFalse(holder.isAPureObjectDefinition());
 
         holder = new FieldsExpositionHolder();
         holder.expose(new Account()).withType(AccountEntity.class);
         holder.expose("two");
-        assertFalse(holder.isAPureEntityDefinition());
+        assertFalse(holder.isAPureObjectDefinition());
 
         holder = new FieldsExpositionHolder();
         holder.expose(new Account()).withType(AccountEntity.class);
-        assertTrue(holder.isAPureEntityDefinition());
+        assertTrue(holder.isAPureObjectDefinition());
 
         holder = new FieldsExpositionHolder();
         holder.expose(new Account()).withNameAndType("account", AccountEntity.class);
-        assertFalse(holder.isAPureEntityDefinition());
+        assertFalse(holder.isAPureObjectDefinition());
     }
 
     @Test
@@ -92,6 +95,16 @@ public class FieldExpositionHolderTest {
         holder.expose(account).withType(AccountEntity.class);
         assertEquals("{\"username\":\"jsonty\"}", holder.build());
     }
+
+    @Test
+    public void test_build_with_pure_map_value(){
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        map.put("one", 1);
+        map.put("two", 2);
+        holder.expose(map);
+        assertEquals("{\"one\":1,\"two\":2}", holder.build());
+    }
+
 
     @Test
     public void test_build(){

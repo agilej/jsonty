@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.Writer;
 import java.util.Date;
 import java.util.List;
 
@@ -72,6 +73,40 @@ public class JSONBuilderTest {
 
         String expected = "{" + jsonPair("username", "donny", true) + "}";
         assertEquals(expected, json);
+
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void test_build_to_writer(){
+        JSONModel model = new JSONModel() {
+            @Override
+            public void config(FieldExposer exposer) {
+                exposer.expose(1).withName("one");
+            }
+        };
+        new JSONBuilder(model).build((Writer) null);
+    }
+
+    @Test
+    public void test_is_pure_array_expose(){
+        JSONBuilder builder = new JSONBuilder(new JSONModel() {
+            @Override
+            public void config(FieldExposer exposer) {
+                exposer.expose(23).withName("age");
+            }
+        });
+
+        assertFalse(builder.isAPureArrayDefinition());
+
+        builder = new JSONBuilder(new JSONModel() {
+            @Override
+            public void config(FieldExposer exposer) {
+                exposer.expose(new int[]{1,2});
+            }
+        });
+
+        assertTrue(builder.isAPureArrayDefinition());
+
 
     }
 }

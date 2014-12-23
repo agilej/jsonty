@@ -25,6 +25,11 @@ public interface FieldExposeResult {
     boolean hasName();
 
     /**
+     * whether the value is a map
+     */
+    boolean isMapValue();
+
+    /**
      *
      * whether the value can be iterated, means its a array or collection value, {@see isArrayValue()}
      *
