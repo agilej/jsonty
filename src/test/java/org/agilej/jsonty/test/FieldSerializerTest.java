@@ -52,8 +52,8 @@ public class FieldSerializerTest {
         fieldSerializer = fieldSerializerWithValue("string");
         assertEquals("\"string\"", fieldSerializer.toJson());
 
-        fieldSerializer = fieldSerializerWithValue("øC");
-        assertEquals("\"øC\"", fieldSerializer.toJson());
+        fieldSerializer = fieldSerializerWithValue("ø");
+        assertEquals("\"ø\"", fieldSerializer.toJson());
     }
 
     @Test
