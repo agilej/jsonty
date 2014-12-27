@@ -74,15 +74,23 @@ public class FieldBuilderTest {
         fieldBuilder.withName("ids").when(1 > 2);;
         assertTrue(fieldBuilder.hasCondition());
         assertFalse(fieldBuilder.conditionMatched());
-        
+
+        fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
         fieldBuilder.withName("ids").when(1 < 2);;
         assertTrue(fieldBuilder.hasCondition());
         assertTrue(fieldBuilder.conditionMatched());
-        
+
+        fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
         int age = 15;
         fieldBuilder.withName("ids").unless(age < 18);;
         assertTrue(fieldBuilder.hasCondition());
         assertFalse(fieldBuilder.conditionMatched());
+
+
+        fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
+        fieldBuilder.withName("ids").unless(age > 18);;
+        assertTrue(fieldBuilder.hasCondition());
+        assertTrue(fieldBuilder.conditionMatched());
     }
     
     @Test
@@ -96,7 +104,19 @@ public class FieldBuilderTest {
         fieldBuilder = new FieldBuilder(null);
         assertFalse(fieldBuilder.isCollectionValue());
     }
-    
+
+    @Test
+    public void test_map_value(){
+        FieldBuilder fieldBuilder = new FieldBuilder(null);
+        assertFalse(fieldBuilder.isMapValue());
+
+        fieldBuilder = new FieldBuilder("a");
+        assertFalse(fieldBuilder.isMapValue());
+
+        fieldBuilder = new FieldBuilder(new HashMap());
+        assertTrue(fieldBuilder.isMapValue());
+    }
+
     @SuppressWarnings("rawtypes")
     @Test
     public void test_has_entity_type(){

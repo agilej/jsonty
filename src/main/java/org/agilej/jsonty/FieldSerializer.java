@@ -2,6 +2,7 @@ package org.agilej.jsonty;
 
 import me.donnior.fava.FList;
 import me.donnior.fava.Function;
+import org.agilej.jsonty.util.JSONStringFormatter;
 import org.agilej.jsonty.util.StringUtil;
 
 import java.lang.reflect.Array;
@@ -35,7 +36,7 @@ public class FieldSerializer {
 
     private String contentWithNameAndValue(Object name, Object value, boolean hasName){
         if(hasName){
-            return StringUtil.quote(name.toString()) + JSONS.NAME_VALUE_SEPARATOR + value0(value);
+            return JSONStringFormatter.quoteWithEscape(name.toString()) + JSONS.NAME_VALUE_SEPARATOR + value0(value);
         } else {
             return value0(value).toString();
         }
@@ -54,7 +55,7 @@ public class FieldSerializer {
         }
 
         if(value instanceof String){
-            return StringUtil.quote(value.toString());
+            return JSONStringFormatter.quoteWithEscape(value.toString());
         }
 
         if(!fieldExposeResult.isValueIterable() && fieldExposeResult.hasEntityType()){
@@ -73,7 +74,7 @@ public class FieldSerializer {
             return _map(value);
         }
 
-        return StringUtil.quote(value.toString());
+        return JSONStringFormatter.quoteWithEscape(value.toString());
     }
 
     /**
