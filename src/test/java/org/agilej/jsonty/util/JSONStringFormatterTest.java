@@ -39,7 +39,6 @@ public class JSONStringFormatterTest {
         assertEquals(quote(" "), JSONStringFormatter.quoteWithEscape(" "));
 
         String s = new String(new char[]{1});
-        System.out.print(s);
         assertEquals(quote("\\u0001"), JSONStringFormatter.quoteWithEscape(s));
     }
 
