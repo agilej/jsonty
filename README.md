@@ -17,6 +17,12 @@ Make fun with JSON serializer.
         }
     };
 
+    //or use lambda in java8
+    JSONModel model = e -> {
+        e.expose(status).withName("status");
+        e.expose(account).withNameAndType("account", AccountEntity.class);
+    }
+
     //to json
     String json = new JSONBuilder(model).build();
 
