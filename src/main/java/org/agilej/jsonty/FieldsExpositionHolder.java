@@ -6,6 +6,10 @@ import me.donnior.fava.Predicate;
 import me.donnior.fava.util.FLists;
 import org.agilej.jsonty.util.StringUtil;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+
 public class FieldsExpositionHolder implements FieldExposer{
 
     private FList<FieldBuilder> fieldsDefinition = FLists.newEmptyList();
@@ -24,16 +28,21 @@ public class FieldsExpositionHolder implements FieldExposer{
         return this.fieldsDefinition;
     }
 
+    public String build() {
+        StringWriter sw = new StringWriter();
+        this.build(sw);
+        return sw.toString();
+    }
+
     /**
      * build final json result 
      */
-    public String build() {
-        final StringBuilder sb = new StringBuilder();
-        
+    public String build(Writer writer) {
+
         boolean isAPureArrayDefinition = isAPureArrayDefinition();
         boolean isAPureEntityDefinition = isAPureObjectDefinition();
         if((!isAPureArrayDefinition) && (!isAPureEntityDefinition)){
-            sb.append(JSONS.OBJECT_START);
+            write(writer, JSONS.OBJECT_START);
         }
         
         FList<FieldBuilder> fieldBuildersNeedExpose = this.fieldsExposeDefinition().select(new Predicate<FieldBuilder>() {
@@ -50,12 +59,12 @@ public class FieldsExpositionHolder implements FieldExposer{
             }
         });
         
-        sb.append(StringUtil.join(fieldStrings, JSONS.FIELD_SEPARATOR));
+        write(writer, StringUtil.join(fieldStrings, JSONS.FIELD_SEPARATOR));
 
         if((!isAPureArrayDefinition) && (!isAPureEntityDefinition)){
-            sb.append(JSONS.OBJECT_END);
+            write(writer, JSONS.OBJECT_END);
         }
-        return sb.toString();
+        return writer.toString();
     }
     
     public boolean isAPureArrayDefinition() {
@@ -68,6 +77,15 @@ public class FieldsExpositionHolder implements FieldExposer{
                 && (!this.fieldsExposeDefinition().at(0).hasName())
                 && (this.fieldsExposeDefinition().at(0).hasEntityType()
                     || this.fieldsExposeDefinition().at(0).isMapValue());
+    }
+
+    private void write(Writer writer, String value){
+        try {
+            writer.append(value);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }

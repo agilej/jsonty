@@ -30,7 +30,7 @@ public class JSONBuilder {
      *
      */
     public void build(Writer writer){
-        throw new RuntimeException("Not Implemented Yet!");
+        this.jsonDefinition.build(writer);
     }
 
     /**

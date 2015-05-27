@@ -2,6 +2,7 @@ package org.agilej.jsonty.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -15,7 +16,6 @@ import org.junit.Test;
 public class BuilderTest {
 
     @Test
-//    @Ignore
     public void testPrimaryTypes(){
         final int age = 12;
         final short s = 1;
@@ -40,24 +40,35 @@ public class BuilderTest {
         //should be {"int":12,"char":"a","byte":1,"short":1,"long":1,"float":1.23,"double":1.25,"login":"srape"}
         String expected = "{\"int\":12,\"char\":\"a\",\"byte\":1,\"short\":1,\"long\":1,\"float\":1.23,\"double\":1.25,\"login\":\"srape\"}";
         assertEquals(expected, build(module));
-        System.out.println(build(module));
+
+        Writer fw = new StringWriter();
+        new JSONBuilder(module).build(fw);
+//        try {
+//            fw = new FileWriter(new File("jsonty_resutl.json"));
+//            new JSONBuilder(module).build(fw);
+//            fw.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
-    
+
+
+
     @Test
-  public void testStringEscape(){
-      final String name = "\"foo\" is not \"bar\". specials: \b\r\n\f\t\\/";
-     
-      JSONModel module = new AbstractJSONMoel() {
+    public void testStringEscape(){
+        final String name = "\"foo\" is not \"bar\". specials: \b\r\n\f\t\\/";
+
+        JSONModel module = new AbstractJSONMoel() {
           public void config() {
               expose(name).withName("login");     //string
           }
-      };
-      
-      //should be {"int":12,"char":"a","byte":1,"short":1,"long":1,"float":1.23,"double":1.25,"login":"srape"}
-      String expected = "{\"login\":\"\\\"foo\\\" is not \\\"bar\\\". specials: \\b\\r\\n\\f\\t\\\\\\/\"}";
-      System.out.println(build(module));
-      assertEquals(expected, build(module));
-  }    
+        };
+
+        //should be {"int":12,"char":"a","byte":1,"short":1,"long":1,"float":1.23,"double":1.25,"login":"srape"}
+        String expected = "{\"login\":\"\\\"foo\\\" is not \\\"bar\\\". specials: \\b\\r\\n\\f\\t\\\\\\/\"}";
+        System.out.println(build(module));
+        assertEquals(expected, build(module));
+    }
     
     
     @Test

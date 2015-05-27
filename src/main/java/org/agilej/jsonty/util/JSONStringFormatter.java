@@ -31,9 +31,7 @@ public class JSONStringFormatter {
                 sb.append(c);
                 break;
             case '/':
-//                if (b == '<') {
-                    sb.append('\\');
-//                }
+                sb.append('\\');
                 sb.append(c);
                 break;
             case '\b':
