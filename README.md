@@ -1,5 +1,4 @@
-Jsonty
-======
+## How to use
 
 
 Make fun with JSON serializer.
@@ -45,6 +44,31 @@ Where `AccountEntity` implement `EntityModel` interface and defined fields will 
 
   }
 ```
+
+## Extra
+
+You can set a condition for field expose use `when` or `unless`
+
+    exposer.expose("xxxx").withName("xxxx").when(age > 18);
+    //or use unless
+    exposer.expose("xxxx").withName("xxxx").when(age <= 18);
+
+You can alse pass enviroment use `plusEnv`and do some extra calculation while exposing field
+
+    Enviroment env = Enviroments.envWith("isAdmin", user.isAdmin()) 
+    exposer.expose(user.profile).withNameAndType("profile", ProfileEntity.class).plusEnv(env);
+
+    //then in ProfileEntity
+
+    public class ProfileEntity implements EntityModel<Profile>{
+
+        public void config(Profile profile, FieldExposer exposer, Environment env) {
+            exposer.expose(xxx).withName("xx");
+            if(env.contains("isAdmin") && env.get("isAdmin")){
+                exposer.expose(xxx).withName("onlyAviableForAdmin"); 
+            }
+        }
+    }
 
 
 http://agilej.github.io/jsonty
