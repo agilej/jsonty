@@ -4,11 +4,13 @@ import me.donnior.fava.FList;
 import me.donnior.fava.Function;
 import me.donnior.fava.Predicate;
 import me.donnior.fava.util.FLists;
+import org.agilej.jsonty.util.StringBuilderWriter;
 import org.agilej.jsonty.util.StringUtil;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Iterator;
 
 public class FieldsExpositionHolder implements FieldExposer{
 
@@ -29,7 +31,7 @@ public class FieldsExpositionHolder implements FieldExposer{
     }
 
     public String build() {
-        StringWriter sw = new StringWriter();
+        StringBuilderWriter sw = new StringBuilderWriter();
         this.build(sw);
         return sw.toString();
     }
@@ -52,14 +54,16 @@ public class FieldsExpositionHolder implements FieldExposer{
             }
         });
 
-        FList<String> fieldStrings = fieldBuildersNeedExpose.map(new Function<FieldBuilder, String>() {
-            @Override
-            public String apply(FieldBuilder fieldBuilder) {
-                return fieldBuilder.toJson();
-            }
-        });
-        
-        write(writer, StringUtil.join(fieldStrings, JSONS.FIELD_SEPARATOR));
+        Iterator<FieldBuilder> it = fieldBuildersNeedExpose.iterator();
+        if (it.hasNext()){
+            FieldBuilder firstFieldBuilder = it.next();
+            write(writer, firstFieldBuilder.toJson());
+        }
+        while (it.hasNext()){
+            FieldBuilder fieldBuilder = it.next();
+            write(writer, JSONS.FIELD_SEPARATOR);
+            write(writer, fieldBuilder.toJson());
+        }
 
         if((!isAPureArrayDefinition) && (!isAPureEntityDefinition)){
             write(writer, JSONS.OBJECT_END);
