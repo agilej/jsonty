@@ -28,32 +28,39 @@ Make fun with JSON serializer.
     //or write to stream, not implemented yet
     new JSONBuilder(model).build(writer);
 
-```    
+```
+
 Where `AccountEntity` implement `EntityModel` interface and defined fields will be exposed to json result.
 
 ```java
-  public class AccountEntity implements EntityModel<Account>{
 
-    public void config(Account account, FieldExposer exposer, Environment env) {
-        exposer.expose(account.getLogin()).withName("loginName");
-        exposer.expose(account.getAvatar()).withName("avatar");
+    public class AccountEntity implements EntityModel<Account>{
+        
+        public void config(Account account, FieldExposer exposer, Environment env) {
+            exposer.expose(account.getLogin()).withName("loginName");
+            exposer.expose(account.getAvatar()).withName("avatar");
 
-        //you can use nested EntityModel too
-        exposer.expose(account.getProfile()).withNameAndType("profile", ProfileEntity.class);
+            //you can use nested EntityModel too
+            exposer.expose(account.getProfile()).withNameAndType("profile", ProfileEntity.class);
+        }
+
     }
-
-  }
 ```
 
 ## Extra
 
 You can set a condition for field expose use `when` or `unless`
 
+```java
+
     exposer.expose("xxxx").withName("xxxx").when(age > 18);
     //or use unless
-    exposer.expose("xxxx").withName("xxxx").when(age <= 18);
+    exposer.expose("xxxx").withName("xxxx").unless(age <= 18);
+```
 
 You can alse pass enviroment use `plusEnv`and do some extra calculation while exposing field
+
+```java
 
     Enviroment env = Enviroments.envWith("isAdmin", user.isAdmin()) 
     exposer.expose(user.profile).withNameAndType("profile", ProfileEntity.class).plusEnv(env);
@@ -69,6 +76,6 @@ You can alse pass enviroment use `plusEnv`and do some extra calculation while ex
             }
         }
     }
-
+```
 
 http://agilej.github.io/jsonty
