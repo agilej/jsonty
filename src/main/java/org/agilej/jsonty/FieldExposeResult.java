@@ -65,6 +65,6 @@ public interface FieldExposeResult {
     boolean isCollectionValue();
 
 
-    Environment getEnviroment();
+    Environment getEnvironment();
 
 }

@@ -182,7 +182,7 @@ public class FieldSerializer {
         try {
             EntityModel entity = clz.newInstance();
             FieldsExpositionHolder holder = new FieldsExpositionHolder();
-            entity.config(value, holder, fieldExposeResult.getEnviroment());
+            entity.config(value, holder, fieldExposeResult.getEnvironment());
             return holder.build();
         } catch (InstantiationException e) {
             e.printStackTrace();

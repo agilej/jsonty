@@ -174,8 +174,8 @@ public class BuilderTest {
           }
       };
       
-      String exptected = "{\"bool\":true}";
-      assertEquals(exptected, build(module));
+      String expected = "{\"bool\":true}";
+      assertEquals(expected, build(module));
       System.out.println(build(module));
   }
 

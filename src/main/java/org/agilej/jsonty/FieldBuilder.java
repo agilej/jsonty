@@ -61,7 +61,7 @@ public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
     }
 
     @Override
-    public Environment getEnviroment(){
+    public Environment getEnvironment(){
         return this.env;
     }
 
@@ -69,7 +69,7 @@ public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
     public Class<? extends EntityModel> getEntityClass(){
         return this.entityClass;
     }
-    
+
     /**
      * whether this field exposition has a valid entity type
      *
