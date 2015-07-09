@@ -1,8 +1,7 @@
 package org.agilej.jsonty;
 
-import me.donnior.fava.FList;
-
 import java.io.Writer;
+import java.util.List;
 
 /**
  * 
@@ -10,10 +9,10 @@ import java.io.Writer;
  */
 public class JSONBuilder {
 
-    private FieldsExpositionHolder jsonDefinition = new FieldsExpositionHolder();
+    private FieldsExpositionHolder fieldsExpositionHolder = new FieldsExpositionHolder();
     
     public JSONBuilder(JSONModel model) {
-        model.config(this.jsonDefinition);
+        model.config(this.fieldsExpositionHolder);
     }
 
     /**
@@ -21,7 +20,7 @@ public class JSONBuilder {
      * 
      */
     public String build() {
-        return this.jsonDefinition.build();
+        return this.fieldsExpositionHolder.build();
     }
 
     /**
@@ -30,22 +29,23 @@ public class JSONBuilder {
      *
      */
     public void build(Writer writer){
-        this.jsonDefinition.build(writer);
+        this.fieldsExpositionHolder.build(writer);
     }
 
     /**
      * whether this json model is a pure array data
      * 
-     */
-    public boolean isAPureArrayDefinition() {
-        return this.jsonDefinition.isAPureArrayDefinition();
+
+    public boolean hasOnlyOneIterableValueWithoutName() {
+        return this.fieldsExpositionHolder.hasOnlyOneIterableValueWithoutName();
     }
     
-    public int fieldsExposeDefinitionCount(){
-        return this.jsonDefinition.fieldsExposeDefinition().size();
+    public int fieldsCount(){
+        return this.fieldsExpositionHolder.fieldsCount();
     }
 
-    public FList<FieldBuilder> getFieldsExposeDefinition() {
-        return this.jsonDefinition.fieldsExposeDefinition();
+    public List<FieldBuilder> exposedFields() {
+        return this.fieldsExpositionHolder.exposedFields();
     }
+     */
 }

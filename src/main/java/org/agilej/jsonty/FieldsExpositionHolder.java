@@ -1,35 +1,36 @@
 package org.agilej.jsonty;
 
-import me.donnior.fava.FList;
-import me.donnior.fava.Function;
-import me.donnior.fava.Predicate;
-import me.donnior.fava.util.FLists;
+
 import org.agilej.jsonty.util.StringBuilderWriter;
-import org.agilej.jsonty.util.StringUtil;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class FieldsExpositionHolder implements FieldExposer{
 
-    private FList<FieldBuilder> fieldsDefinition = FLists.newEmptyList();
+    private List<FieldBuilder> fieldBuilders = new ArrayList<FieldBuilder>();
     
     public ScopedFieldBuilder expose(Object value){
         FieldBuilder fieldBuilder = new FieldBuilder(value);
-        this.fieldsDefinition.add(fieldBuilder);
+        this.fieldBuilders.add(fieldBuilder);
         return fieldBuilder;
     }
     
     public int fieldsCount(){
-        return fieldsExposeDefinition().size();
+        return exposedFields().size();
     }
     
-    public FList<FieldBuilder> fieldsExposeDefinition(){
-        return this.fieldsDefinition;
+    public List<FieldBuilder> exposedFields(){
+        return this.fieldBuilders;
     }
 
+    /**
+     * build final json string
+     * @return
+     */
     public String build() {
         StringBuilderWriter sw = new StringBuilderWriter();
         this.build(sw);
@@ -37,22 +38,16 @@ public class FieldsExpositionHolder implements FieldExposer{
     }
 
     /**
-     * build final json result 
+     * build final json result and write to given writer
      */
     public String build(Writer writer) {
+        boolean needOuterObjectWrapper = needOuterObjectWrap();
 
-        boolean isAPureArrayDefinition = isAPureArrayDefinition();
-        boolean isAPureEntityDefinition = isAPureObjectDefinition();
-        if((!isAPureArrayDefinition) && (!isAPureEntityDefinition)){
+        if(needOuterObjectWrapper){
             write(writer, JSONS.OBJECT_START);
         }
         
-        FList<FieldBuilder> fieldBuildersNeedExpose = this.fieldsExposeDefinition().select(new Predicate<FieldBuilder>() {
-            @Override
-            public boolean apply(FieldBuilder fieldBuilder) {
-                return fieldBuilder.conditionMatched();
-            }
-        });
+        List<FieldBuilder> fieldBuildersNeedExpose = this.filterConditionMatched(exposedFields());
 
         Iterator<FieldBuilder> it = fieldBuildersNeedExpose.iterator();
         if (it.hasNext()){
@@ -65,22 +60,46 @@ public class FieldsExpositionHolder implements FieldExposer{
             write(writer, fieldBuilder.toJson());
         }
 
-        if((!isAPureArrayDefinition) && (!isAPureEntityDefinition)){
+        if(needOuterObjectWrapper){
             write(writer, JSONS.OBJECT_END);
         }
+
         return writer.toString();
     }
-    
-    public boolean isAPureArrayDefinition() {
-        return this.fieldsExposeDefinition().size() == 1 &&
-                this.fieldsExposeDefinition().at(0).isPureIterableValue();
+
+    private boolean needOuterObjectWrap(){
+        return (!hasOnlyOneIterableValueWithoutName()) && (!hasOnlyOneObjectValueWithoutName());
     }
 
-    public boolean isAPureObjectDefinition() {
-        return this.fieldsExposeDefinition().size() == 1
-                && (!this.fieldsExposeDefinition().at(0).hasName())
-                && (this.fieldsExposeDefinition().at(0).hasEntityType()
-                    || this.fieldsExposeDefinition().at(0).isMapValue());
+    /**
+     * whether this fields container has only one iterable value without name.
+     * If so the json output will be directly `[xx,xx]`
+     */
+    public boolean hasOnlyOneIterableValueWithoutName() {
+        return this.exposedFields().size() == 1 &&
+                this.exposedFields().get(0).isPureIterableValue();
+    }
+
+    /**
+     * whether this fields container has only one object-style value (entity value or map value).
+     * If so the json output will be a single object map `{}` without the out wrapper `{}`
+     *
+     */
+    public boolean hasOnlyOneObjectValueWithoutName() {
+        return this.exposedFields().size() == 1
+                && (!this.exposedFields().get(0).hasName())
+                && (this.exposedFields().get(0).hasEntityType()
+                    || this.exposedFields().get(0).isMapValue());
+    }
+
+    private List<FieldBuilder> filterConditionMatched(List<FieldBuilder> list){
+        List<FieldBuilder> result = new ArrayList<FieldBuilder>(list.size());
+        for (FieldBuilder builder : list){
+            if (builder.conditionMatched()){
+                result.add(builder);
+            }
+        }
+        return result;
     }
 
     private void write(Writer writer, String value){

@@ -25,6 +25,7 @@
         <groupId>me.donnior</groupId>
         <artifactId>fava</artifactId>
         <version>1.2</version>
+        <scope>test</scope>
     </dependency>
 </dependencies>
 

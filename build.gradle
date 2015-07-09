@@ -16,9 +16,5 @@ tasks.withType(JDepend) {
 
 dependencies {
     testCompile 'junit:junit:4.0'
-    compile 'com.google.guava:guava:11.0.2'
-    compile 'me.donnior:fava:1.1'
-    compile 'org.slf4j:slf4j-api:1.7.5'
-    compile 'org.slf4j:slf4j-log4j12:1.7.5'
-    
+    testCompile 'me.donnior:fava:1.1'
 }

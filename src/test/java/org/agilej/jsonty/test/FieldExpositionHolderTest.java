@@ -34,52 +34,52 @@ public class FieldExpositionHolderTest {
         holder.expose("s").withName("string");
         assertEquals(2, holder.fieldsCount());
         
-        Integer value = (Integer) holder.fieldsExposeDefinition().at(0).getValue();
+        Integer value = (Integer) holder.exposedFields().get(0).getValue();
         assertTrue(value == 1);
     }
     
     @Test
     public void test_is_pure_array_value(){
         
-        assertFalse(holder.isAPureArrayDefinition());
+        assertFalse(holder.hasOnlyOneIterableValueWithoutName());
        
         holder.expose(1);
-        assertFalse(holder.isAPureArrayDefinition());
+        assertFalse(holder.hasOnlyOneIterableValueWithoutName());
         
         holder = new FieldsExpositionHolder();
         holder.expose(new int[]{1,2,3});
         holder.expose("two");
-        assertFalse(holder.isAPureArrayDefinition());
+        assertFalse(holder.hasOnlyOneIterableValueWithoutName());
         
         holder = new FieldsExpositionHolder();
         holder.expose(new int[]{1,2,3});
-        assertTrue(holder.isAPureArrayDefinition());
+        assertTrue(holder.hasOnlyOneIterableValueWithoutName());
         
         holder = new FieldsExpositionHolder();
         holder.expose(FLists.create(1,2,3));
-        assertTrue(holder.isAPureArrayDefinition());
+        assertTrue(holder.hasOnlyOneIterableValueWithoutName());
     }
 
     @Test
     public void test_is_pure_entity_value(){
 
-        assertFalse(holder.isAPureObjectDefinition());
+        assertFalse(holder.hasOnlyOneObjectValueWithoutName());
 
         holder.expose(1);
-        assertFalse(holder.isAPureObjectDefinition());
+        assertFalse(holder.hasOnlyOneObjectValueWithoutName());
 
         holder = new FieldsExpositionHolder();
         holder.expose(new Account()).withType(AccountEntity.class);
         holder.expose("two");
-        assertFalse(holder.isAPureObjectDefinition());
+        assertFalse(holder.hasOnlyOneObjectValueWithoutName());
 
         holder = new FieldsExpositionHolder();
         holder.expose(new Account()).withType(AccountEntity.class);
-        assertTrue(holder.isAPureObjectDefinition());
+        assertTrue(holder.hasOnlyOneObjectValueWithoutName());
 
         holder = new FieldsExpositionHolder();
         holder.expose(new Account()).withNameAndType("account", AccountEntity.class);
-        assertFalse(holder.isAPureObjectDefinition());
+        assertFalse(holder.hasOnlyOneObjectValueWithoutName());
     }
 
     @Test

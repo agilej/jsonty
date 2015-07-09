@@ -6,11 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.Writer;
-import java.util.Date;
-import java.util.List;
 
-import org.agilej.jsonty.EntityModel;
-import org.agilej.jsonty.Environment;
 import org.agilej.jsonty.FieldBuilder;
 import org.agilej.jsonty.FieldExposer;
 import org.agilej.jsonty.JSONBuilder;
@@ -18,7 +14,6 @@ import org.agilej.jsonty.JSONModel;
 import org.agilej.jsonty.mapping.Account;
 import org.agilej.jsonty.mapping.AccountEntity;
 import org.agilej.jsonty.model.Controller;
-import org.agilej.jsonty.model.User;
 import org.junit.Test;
 
 public class JSONBuilderTest {
@@ -29,18 +24,19 @@ public class JSONBuilderTest {
         
         System.out.println(builder.build());
         
-        assertEquals(2, builder.fieldsExposeDefinitionCount());
+/*
+        assertEquals(2, builder.fieldsCount());
         
-        FieldBuilder impl = builder.getFieldsExposeDefinition().first();
+        FieldBuilder impl = builder.exposedFields().get(0);
         assertEquals("users", impl.getName());
         assertFalse(impl.conditionMatched());
         assertNull(impl.getEntityClass());
         
-        impl = builder.getFieldsExposeDefinition().at(1);
+        impl = builder.exposedFields().get(1);
         assertEquals("account", impl.getName());
         assertTrue(impl.conditionMatched());
         assertTrue(impl.getEntityClass().equals(AccountEntity.class));
-        
+*/
         
     }
     
@@ -87,6 +83,7 @@ public class JSONBuilderTest {
         new JSONBuilder(model).build((Writer) null);
     }
 
+   /*
     @Test
     public void test_is_pure_array_expose(){
         JSONBuilder builder = new JSONBuilder(new JSONModel() {
@@ -96,7 +93,7 @@ public class JSONBuilderTest {
             }
         });
 
-        assertFalse(builder.isAPureArrayDefinition());
+        assertFalse(builder.hasOnlyOneIterableValueWithoutName());
 
         builder = new JSONBuilder(new JSONModel() {
             @Override
@@ -105,10 +102,11 @@ public class JSONBuilderTest {
             }
         });
 
-        assertTrue(builder.isAPureArrayDefinition());
+        assertTrue(builder.hasOnlyOneIterableValueWithoutName());
 
 
     }
+    */
 }
 
 

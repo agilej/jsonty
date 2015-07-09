@@ -19,7 +19,8 @@ public interface FieldExposeResult {
 
     /**
      *
-     *
+     * if name is present
+     * @see #getName()
      *
      */
     boolean hasName();
@@ -31,7 +32,7 @@ public interface FieldExposeResult {
 
     /**
      *
-     * whether the value can be iterated, means its a array or collection value, {@see isArrayValue()}
+     * whether the value can be iterated, means its a array or collection value
      *
      * @see #isArrayValue
      * @see #isCollectionValue
@@ -42,7 +43,7 @@ public interface FieldExposeResult {
 
     /**
      *
-     * whether this field is using EntityModel mapping
+     * whether this field is using {@link EntityModel} mapping
      *
      */
     boolean hasEntityType();

@@ -1,17 +1,10 @@
 package org.agilej.jsonty;
 
-import me.donnior.fava.FList;
-import me.donnior.fava.Function;
 import org.agilej.jsonty.util.JSONStringFormatter;
 import org.agilej.jsonty.util.StringUtil;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import static me.donnior.fava.util.FLists.$;
+import java.util.*;
 
 /**
  *
@@ -89,22 +82,22 @@ public class FieldSerializer {
         StringBuilder sb = new StringBuilder();
         sb.append(JSONS.OBJECT_START);
 
-        /*
+
         List<String> collector = new ArrayList<String>();
-        Iterator<Entry<Object, Object>> it = map.entrySet().iterator();
+        Iterator<Map.Entry<Object, Object>> it = map.entrySet().iterator();
         while(it.hasNext()){
-            Entry<Object, Object>  entry = it.next();
+            Map.Entry<Object, Object> entry = it.next();
             collector.add(contentWithNameAndValue(entry.getKey(),   entry.getValue(), true));
         }
-        */
 
+/*
         FList<String> collector = $(map.entrySet()).map(new Function<Map.Entry<Object, Object>, String>() {
             @Override
             public String apply(Map.Entry<Object, Object> entry) {
                 return contentWithNameAndValue(entry.getKey(),   entry.getValue(), true);
             }
         });
-
+*/
         sb.append(StringUtil.join(collector, JSONS.FIELD_SEPARATOR));
         sb.append(JSONS.OBJECT_END);
         return sb.toString();
@@ -123,18 +116,18 @@ public class FieldSerializer {
         StringBuilder sb = new StringBuilder();
         sb.append(JSONS.ARRAY_START);
 
-        /*
+
         List<Object> values = new ArrayList<Object>();
         Iterator<Object> it = collection.iterator();
         while(it.hasNext()){
             if(hasEntityType){
-                values.add(buildEntity(it.next(), this.entityClass));
+                values.add(buildEntity(it.next(), fieldExposeResult.getEntityClass()));
             } else {
                 values.add(value0(it.next()));
             }
         }
-        */
 
+/*
         List<Object> values = $(collection).map(new Function<Object, Object>(){
             @Override
             public Object apply(Object value) {
@@ -142,7 +135,7 @@ public class FieldSerializer {
             }
 
         });
-
+*/
         sb.append(StringUtil.join(values, JSONS.FIELD_SEPARATOR));
         sb.append(JSONS.ARRAY_END);
         return sb.toString();

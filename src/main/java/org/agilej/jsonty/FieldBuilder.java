@@ -1,22 +1,9 @@
 package org.agilej.jsonty;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-
-import org.agilej.jsonty.util.StringUtil;
-
-import me.donnior.fava.FList;
-import me.donnior.fava.Function;
-
-
-import static me.donnior.fava.util.FLists.*;
 
 @SuppressWarnings("rawtypes")
-
 public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
 
     private String name;
@@ -149,7 +136,7 @@ public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
      * <br />
      *
      * If this field exposition is pure iterable, it would be output as <pre><code>[1,2,3]</code></pre>
-     * Otherwise it will be output as <pre><code>{"name": xxxx}</code></pre>
+     * Otherwise it will be output as <pre><code>{"name": [1,2,3]}</code></pre>
      * 
      * @return
      */
