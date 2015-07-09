@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.agilej.jsonty.Environment;
 
+@Deprecated
 public class MapBasedEnviroment implements Environment{
 
     private Map<String, Object> map;

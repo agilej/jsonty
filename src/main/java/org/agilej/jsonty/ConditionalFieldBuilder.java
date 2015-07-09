@@ -6,6 +6,6 @@ public interface ConditionalFieldBuilder {
     
     public void when(boolean condition);
     
-    public ScopedFieldBuilder plusEnv(Environment env);
+    public ConditionalFieldBuilder plusEnv(Environment env);
     
 }

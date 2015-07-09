@@ -8,7 +8,7 @@ import org.agilej.jsonty.Environment;
 public class Environments {
     
     public static Environment envFromMap(Map<String, Object> hashMap) {
-        Environment env = new MapBasedEnviroment(hashMap);
+        Environment env = new MapBasedEnvironment(hashMap);
         return env;
     }
 
@@ -24,4 +24,24 @@ public class Environments {
         map.put(key2, value2);
         return envFromMap(map);
     }
+
+    static class MapBasedEnvironment implements Environment{
+        private Map<String, Object> map;
+
+        public MapBasedEnvironment(Map<String, Object> map){
+            this.map = new HashMap<String, Object>(map);
+        }
+
+        @Override
+        public boolean contains(String key) {
+            return this.map.containsKey(key);
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public Object get(String key) {
+            return this.map.get(key);
+        }
+    }
+
 }

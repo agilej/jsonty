@@ -4,8 +4,18 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * Not like JDK's StringWriter which use StringBuffer as string container,
- * StringBuilderWriter use StringBuilder
+ *  <p>
+ *  One {@link StringBuilder} based {@link Writer} implementation.
+ *
+ *  <p>
+ *  Closing a <tt>StringBuilderWriter</tt> has no effect. The methods in this class
+ *  can be called after the stream has been closed without generating an
+ *  <tt>IOException</tt>.
+ *
+ *  <p>
+ *  JDK's built-in {@link java.io.StringWriter} is based on {@link StringBuffer}
+ *  
+
  */
 public class StringBuilderWriter extends Writer {
 

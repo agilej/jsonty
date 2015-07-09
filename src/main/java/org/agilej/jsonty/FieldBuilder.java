@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 
 @SuppressWarnings("rawtypes")
-public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
+public class FieldBuilder implements CustomizedFieldBuilder, FieldExposeResult{
 
     private String name;
     private Object value;
@@ -37,7 +37,7 @@ public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
     }
     
     @Override
-    public ScopedFieldBuilder plusEnv(Environment env) {
+    public ConditionalFieldBuilder plusEnv(Environment env) {
         this.env = env;
         return this;
     }
@@ -121,19 +121,18 @@ public class FieldBuilder implements ScopedFieldBuilder, FieldExposeResult{
 
     /**
      *
+     * <p>
      * According to the json specification, json data can be start with "{", or just "["  , the second form is
      * called pure-iterable value in jsonty
      *
-     * <br />
-     * <br />
+     * <p>
      *
      * one field is a pure iterable value when it's value is iterable and don't have a
      * explicit name. You can't use {@link #withName(String)} or {@link #withNameAndType(String, Class)}
      * to define a field exposition if you want to make it pure-iterable, you can use {@link #withType(Class)}
      * or just ignore the 'with' clause.
-     * 
-     * <br />
-     * <br />
+     *
+     * <p>
      *
      * If this field exposition is pure iterable, it would be output as <pre><code>[1,2,3]</code></pre>
      * Otherwise it will be output as <pre><code>{"name": [1,2,3]}</code></pre>

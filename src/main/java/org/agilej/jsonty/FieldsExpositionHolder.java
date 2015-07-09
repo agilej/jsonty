@@ -13,7 +13,7 @@ public class FieldsExpositionHolder implements FieldExposer{
 
     private List<FieldBuilder> fieldBuilders = new ArrayList<FieldBuilder>();
     
-    public ScopedFieldBuilder expose(Object value){
+    public CustomizedFieldBuilder expose(Object value){
         FieldBuilder fieldBuilder = new FieldBuilder(value);
         this.fieldBuilders.add(fieldBuilder);
         return fieldBuilder;

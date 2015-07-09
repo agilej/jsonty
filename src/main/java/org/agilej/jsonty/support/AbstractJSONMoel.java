@@ -2,7 +2,7 @@ package org.agilej.jsonty.support;
 
 import org.agilej.jsonty.FieldExposer;
 import org.agilej.jsonty.JSONModel;
-import org.agilej.jsonty.ScopedFieldBuilder;
+import org.agilej.jsonty.CustomizedFieldBuilder;
 
 /**
  * 
@@ -34,7 +34,7 @@ public abstract class AbstractJSONMoel implements JSONModel{
         
     }
 
-    protected ScopedFieldBuilder expose(Object field){
+    protected CustomizedFieldBuilder expose(Object field){
         return this.exposer.expose(field);
     }
     
