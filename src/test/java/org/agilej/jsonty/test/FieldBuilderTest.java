@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.List;
 
-import me.donnior.fava.util.FLists;
+import org.agilej.fava.util.FLists;
 
 import org.agilej.jsonty.EntityModel;
 import org.agilej.jsonty.Environment;

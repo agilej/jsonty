@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import me.donnior.fava.util.FLists;
+import org.agilej.fava.util.FLists;
 import org.agilej.jsonty.JSONBuilder;
 import org.agilej.jsonty.JSONModel;
 import org.agilej.jsonty.support.AbstractJSONMoel;

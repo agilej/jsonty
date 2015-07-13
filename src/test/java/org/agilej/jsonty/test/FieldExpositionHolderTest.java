@@ -1,7 +1,7 @@
 package org.agilej.jsonty.test;
 
 import static org.junit.Assert.*;
-import me.donnior.fava.util.FLists;
+import org.agilej.fava.util.FLists;
 
 import org.agilej.jsonty.FieldsExpositionHolder;
 import org.agilej.jsonty.mapping.Account;
