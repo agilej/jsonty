@@ -98,7 +98,7 @@ public class FieldSerializerTest {
 
     @Test
     public void test_map(){
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new TreeMap<String, Object>();
         map.put("one", 1);
         map.put("two", "2");
 

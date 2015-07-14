@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class FieldExpositionHolderTest {
 
@@ -98,7 +99,7 @@ public class FieldExpositionHolderTest {
 
     @Test
     public void test_build_with_pure_map_value(){
-        Map<String, Integer> map = new HashMap<String, Integer>();
+        Map<String, Integer> map = new TreeMap<String, Integer>();
         map.put("one", 1);
         map.put("two", 2);
         holder.expose(map);
