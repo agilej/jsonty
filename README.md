@@ -1,5 +1,6 @@
-## How to use
+[![Build Status](https://drone.io/github.com/agilej/jsonty/status.png)](https://drone.io/github.com/agilej/jsonty/latest)
 
+## How to use
 
 Make fun with JSON serializer.
 
