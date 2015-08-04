@@ -43,7 +43,7 @@ public interface FieldExposeResult {
 
     /**
      *
-     * whether this field is using {@link EntityModel} mapping
+     * whether this field is using {@link EntityMapper} mapping
      *
      */
     boolean hasEntityType();
@@ -53,7 +53,7 @@ public interface FieldExposeResult {
      * the EntityModel type this field use
      *
      */
-    Class<? extends EntityModel> getEntityClass();
+    Class<? extends EntityMapper> getEntityClass();
 
     /**
      * whether the value is a java array

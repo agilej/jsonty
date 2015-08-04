@@ -171,10 +171,10 @@ public class FieldSerializer {
      *
      */
     @SuppressWarnings({"unchecked" })
-    private Object buildEntity(Object value, Class<? extends EntityModel> clz) {
+    private Object buildEntity(Object value, Class<? extends EntityMapper> clz) {
         try {
-            EntityModel entity = clz.newInstance();
-            FieldsExpositionHolder holder = new FieldsExpositionHolder();
+            EntityMapper entity = clz.newInstance();
+            FieldsContainer holder = new FieldsContainer();
             entity.config(value, holder, fieldExposeResult.getEnvironment());
             return holder.build();
         } catch (InstantiationException e) {

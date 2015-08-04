@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Writer;
 
-import org.agilej.jsonty.FieldBuilder;
 import org.agilej.jsonty.FieldExposer;
 import org.agilej.jsonty.JSONBuilder;
 import org.agilej.jsonty.JSONModel;
@@ -62,7 +61,7 @@ public class JSONBuilderTest {
         JSONModel model = new JSONModel() {
             @Override
             public void config(FieldExposer exposer) {
-                exposer.expose(account).withType(AccountEntity.class);
+                exposer.expose(account).withMapping(AccountEntity.class);
             }
         };
         String json = new JSONBuilder(model).build();

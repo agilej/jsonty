@@ -19,10 +19,10 @@ import java.io.Writer;
  */
 public class StringBuilderWriter extends Writer {
 
-    private StringBuilder buf;
+    private final StringBuilder buf;
 
     public StringBuilderWriter() {
-        buf = new StringBuilder();
+        this(100);
     }
 
     public StringBuilderWriter(int initialSize) {

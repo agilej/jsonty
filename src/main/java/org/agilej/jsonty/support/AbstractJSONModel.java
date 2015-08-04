@@ -17,7 +17,7 @@ import org.agilej.jsonty.CustomizedFieldBuilder;
  * }
  * </pre>
  */
-public abstract class AbstractJSONMoel implements JSONModel{
+public abstract class AbstractJSONModel implements JSONModel{
 
     private FieldExposer exposer;
     

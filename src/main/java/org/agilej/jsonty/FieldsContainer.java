@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FieldsExpositionHolder implements FieldExposer{
+public class FieldsContainer implements FieldExposer{
 
     private List<FieldBuilder> fieldBuilders = new ArrayList<FieldBuilder>();
     

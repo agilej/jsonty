@@ -19,7 +19,7 @@ public class Controller{
             @Override
             public void config(FieldExposer exposer) {
                 exposer.expose(users).withName("users").when(age > 76);
-                exposer.expose(account).withNameAndType("account", AccountEntity.class);
+                exposer.expose(account).withNameAndMapping("account", AccountEntity.class);
             }
         });
     }

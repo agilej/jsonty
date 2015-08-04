@@ -8,7 +8,7 @@ public class FieldBuilder implements CustomizedFieldBuilder, FieldExposeResult{
 
     private String name;
     private Object value;
-    private Class<? extends EntityModel> entityClass;
+    private Class<? extends EntityMapper> entityClass;
 
     private boolean condition;
     private boolean hasCondition;
@@ -19,7 +19,7 @@ public class FieldBuilder implements CustomizedFieldBuilder, FieldExposeResult{
         this.value = value;
     }
 
-    public ConditionalFieldBuilder withNameAndType(String name, Class<? extends EntityModel> entityClass) {
+    public ConditionalFieldBuilder withNameAndMapping(String name, Class<? extends EntityMapper> entityClass) {
         this.hasName = true;
         this.name = name;
         this.entityClass = entityClass;
@@ -27,10 +27,10 @@ public class FieldBuilder implements CustomizedFieldBuilder, FieldExposeResult{
     }
 
     public ConditionalFieldBuilder withName(String string) {
-        return this.withNameAndType(string, null);
+        return this.withNameAndMapping(string, null);
     }
     
-    public ConditionalFieldBuilder withType(Class<? extends EntityModel> entityClass) {
+    public ConditionalFieldBuilder withMapping(Class<? extends EntityMapper> entityClass) {
         this.hasName = false;
         this.entityClass = entityClass;
         return this;        
@@ -53,7 +53,7 @@ public class FieldBuilder implements CustomizedFieldBuilder, FieldExposeResult{
     }
 
     @Override
-    public Class<? extends EntityModel> getEntityClass(){
+    public Class<? extends EntityMapper> getEntityClass(){
         return this.entityClass;
     }
 
@@ -128,8 +128,8 @@ public class FieldBuilder implements CustomizedFieldBuilder, FieldExposeResult{
      * <p>
      *
      * one field is a pure iterable value when it's value is iterable and don't have a
-     * explicit name. You can't use {@link #withName(String)} or {@link #withNameAndType(String, Class)}
-     * to define a field exposition if you want to make it pure-iterable, you can use {@link #withType(Class)}
+     * explicit name. You can't use {@link #withName(String)} or {@link #withNameAndMapping(String, Class)}
+     * to define a field exposition if you want to make it pure-iterable, you can use {@link #withMapping(Class)}
      * or just ignore the 'with' clause.
      *
      * <p>

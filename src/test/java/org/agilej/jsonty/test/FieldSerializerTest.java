@@ -1,7 +1,6 @@
 package org.agilej.jsonty.test;
 
 import org.agilej.jsonty.FieldBuilder;
-import org.agilej.jsonty.FieldExposeResult;
 import org.agilej.jsonty.FieldSerializer;
 import org.agilej.jsonty.mapping.Account;
 import org.agilej.jsonty.mapping.AccountEntity;
@@ -62,7 +61,7 @@ public class FieldSerializerTest {
         account.login = "json";
 
         FieldBuilder fb = new FieldBuilder(account);
-        fb.withNameAndType("account", AccountEntity.class);
+        fb.withNameAndMapping("account", AccountEntity.class);
         fieldSerializer = new FieldSerializer(fb);
         assertEquals("\"account\":{\"username\":\"json\"}", fieldSerializer.toJson());
     }
@@ -91,7 +90,7 @@ public class FieldSerializerTest {
         account.login = "json";
 
         FieldBuilder fb = new FieldBuilder(new Account[]{account, account});
-        fb.withNameAndType("account", AccountEntity.class);
+        fb.withNameAndMapping("account", AccountEntity.class);
         fieldSerializer = new FieldSerializer(fb);
         assertEquals("\"account\":[{\"username\":\"json\"},{\"username\":\"json\"}]", fieldSerializer.toJson());
     }
@@ -123,7 +122,7 @@ public class FieldSerializerTest {
         list.add(account);
 
         FieldBuilder fb = new FieldBuilder(list);
-        fb.withNameAndType("account", AccountEntity.class);
+        fb.withNameAndMapping("account", AccountEntity.class);
         fieldSerializer = new FieldSerializer(fb);
         assertEquals("\"account\":[{\"username\":\"json\"},{\"username\":\"json\"}]", fieldSerializer.toJson());
     }

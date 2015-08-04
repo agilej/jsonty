@@ -14,24 +14,24 @@ import org.agilej.jsonty.mapping.SummaryUserEntity;
 import org.agilej.jsonty.model.Post;
 import org.agilej.jsonty.model.Profile;
 import org.agilej.jsonty.model.User;
-import org.agilej.jsonty.support.AbstractJSONMoel;
+import org.agilej.jsonty.support.AbstractJSONModel;
 import org.agilej.jsonty.support.Environments;
 import org.junit.Ignore;
 import org.junit.Test;
 
 
-public class SrapeEntityTest {
+public class EntityMapperTest {
 
     @Test
-    public void test_srape_entity_value_1() {
+    public void test_mapping_entity_value_1() {
         final User user = domainUser();
         
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("isAdmin", true);
         final Environment env = Environments.envFromMap(map);
-        JSONModel module = new AbstractJSONMoel() {
+        JSONModel module = new AbstractJSONModel() {
             public void config() {
-                expose(user).withNameAndType("user", SummaryUserEntity.class).plusEnv(env);
+                expose(user).withNameAndMapping("user", SummaryUserEntity.class).plusEnv(env);
             }
         };
 
@@ -39,12 +39,12 @@ public class SrapeEntityTest {
     }
 
     @Test
-    public void test_srape_entity_value_2() {
+    public void test_mapping_entity_value_2() {
         final User user = domainUser();
 
-        JSONModel module = new AbstractJSONMoel() {
+        JSONModel module = new AbstractJSONModel() {
             public void config() {
-                expose(user).withNameAndType("user", DetailedUserEntity.class);
+                expose(user).withNameAndMapping("user", DetailedUserEntity.class);
             }
         };
 
@@ -52,12 +52,12 @@ public class SrapeEntityTest {
     }
     
     @Test
-    public void test_srape_entity_value_3() {
+    public void test_mapping_entity_value_3() {
         final User user = domainUser();
 
-        JSONModel module = new AbstractJSONMoel() {
+        JSONModel module = new AbstractJSONModel() {
             public void config() {
-                expose(user.posts).withType(PostEntity.class);
+                expose(user.posts).withMapping(PostEntity.class);
             }
         };
 
@@ -66,16 +66,16 @@ public class SrapeEntityTest {
     
     @Test
     @Ignore
-    public void test_srape_with_map_value(){
+    public void test_mapping_with_map_value(){
         final User user = domainUser();
         
         final Map<String, Object> map = new HashMap<String, Object>();
         map.put("user", user);
         map.put("num", 1);
         
-        JSONModel module = new AbstractJSONMoel() {
+        JSONModel module = new AbstractJSONModel() {
             public void config() {
-                expose(map).withNameAndType("res", PostEntity.class);
+                expose(map).withNameAndMapping("res", PostEntity.class);
             }
         };
 

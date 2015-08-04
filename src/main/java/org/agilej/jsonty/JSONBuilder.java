@@ -1,7 +1,6 @@
 package org.agilej.jsonty;
 
 import java.io.Writer;
-import java.util.List;
 
 /**
  * 
@@ -9,10 +8,10 @@ import java.util.List;
  */
 public class JSONBuilder {
 
-    private FieldsExpositionHolder fieldsExpositionHolder = new FieldsExpositionHolder();
+    private FieldsContainer fieldsContainer = new FieldsContainer();
     
     public JSONBuilder(JSONModel model) {
-        model.config(this.fieldsExpositionHolder);
+        model.config(this.fieldsContainer);
     }
 
     /**
@@ -20,7 +19,7 @@ public class JSONBuilder {
      * 
      */
     public String build() {
-        return this.fieldsExpositionHolder.build();
+        return this.fieldsContainer.build();
     }
 
     /**
@@ -29,7 +28,7 @@ public class JSONBuilder {
      *
      */
     public void build(Writer writer){
-        this.fieldsExpositionHolder.build(writer);
+        this.fieldsContainer.build(writer);
     }
 
     /**

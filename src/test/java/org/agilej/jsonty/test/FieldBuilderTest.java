@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.agilej.fava.util.FLists;
 
-import org.agilej.jsonty.EntityModel;
+import org.agilej.jsonty.EntityMapper;
 import org.agilej.jsonty.Environment;
 import org.agilej.jsonty.FieldBuilder;
 import org.agilej.jsonty.FieldExposer;
@@ -35,7 +35,7 @@ public class FieldBuilderTest {
     }
     
     @Test
-    public void test_build_withName(){
+    public void test_build_with_name(){
 
         FieldBuilder fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
         
@@ -56,7 +56,7 @@ public class FieldBuilderTest {
         
         
         fieldBuilder = new FieldBuilder(new int[]{1,3,5});
-        fieldBuilder.withNameAndType("data", ExampleEntity.class);
+        fieldBuilder.withNameAndMapping("data", ExampleEntity.class);
 
         assertEquals("data", fieldBuilder.getName());
         assertEquals(ExampleEntity.class, fieldBuilder.getEntityClass());
@@ -124,20 +124,20 @@ public class FieldBuilderTest {
         
         assertFalse(fieldBuilder.hasEntityType());
         
-        fieldBuilder.withNameAndType("name", DetailedUserEntity.class);
+        fieldBuilder.withNameAndMapping("name", DetailedUserEntity.class);
         assertTrue(fieldBuilder.hasEntityType());
         
         fieldBuilder = new FieldBuilder(new HashMap());
         
         assertFalse(fieldBuilder.hasEntityType());
         
-        fieldBuilder.withNameAndType("name", DetailedUserEntity.class);
+        fieldBuilder.withNameAndMapping("name", DetailedUserEntity.class);
         assertTrue(fieldBuilder.hasEntityType());
     }
 }
 
 
-class ExampleEntity implements EntityModel<Integer>{
+class ExampleEntity implements EntityMapper<Integer> {
 
     @Override
     public void config(Integer object, FieldExposer exposer, Environment env) {

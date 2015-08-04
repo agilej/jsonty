@@ -3,23 +3,22 @@ package org.agilej.jsonty.test;
 import static org.junit.Assert.*;
 import org.agilej.fava.util.FLists;
 
-import org.agilej.jsonty.FieldsExpositionHolder;
+import org.agilej.jsonty.FieldsContainer;
 import org.agilej.jsonty.mapping.Account;
 import org.agilej.jsonty.mapping.AccountEntity;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class FieldExpositionHolderTest {
 
-    private FieldsExpositionHolder holder;
+    private FieldsContainer holder;
     
     @Before
     public void setup(){
-        holder = new FieldsExpositionHolder();
+        holder = new FieldsContainer();
     }
     
     @Test
@@ -47,16 +46,16 @@ public class FieldExpositionHolderTest {
         holder.expose(1);
         assertFalse(holder.hasOnlyOneIterableValueWithoutName());
         
-        holder = new FieldsExpositionHolder();
+        holder = new FieldsContainer();
         holder.expose(new int[]{1,2,3});
         holder.expose("two");
         assertFalse(holder.hasOnlyOneIterableValueWithoutName());
         
-        holder = new FieldsExpositionHolder();
+        holder = new FieldsContainer();
         holder.expose(new int[]{1,2,3});
         assertTrue(holder.hasOnlyOneIterableValueWithoutName());
         
-        holder = new FieldsExpositionHolder();
+        holder = new FieldsContainer();
         holder.expose(FLists.create(1,2,3));
         assertTrue(holder.hasOnlyOneIterableValueWithoutName());
     }
@@ -69,17 +68,17 @@ public class FieldExpositionHolderTest {
         holder.expose(1);
         assertFalse(holder.hasOnlyOneObjectValueWithoutName());
 
-        holder = new FieldsExpositionHolder();
-        holder.expose(new Account()).withType(AccountEntity.class);
+        holder = new FieldsContainer();
+        holder.expose(new Account()).withMapping(AccountEntity.class);
         holder.expose("two");
         assertFalse(holder.hasOnlyOneObjectValueWithoutName());
 
-        holder = new FieldsExpositionHolder();
-        holder.expose(new Account()).withType(AccountEntity.class);
+        holder = new FieldsContainer();
+        holder.expose(new Account()).withMapping(AccountEntity.class);
         assertTrue(holder.hasOnlyOneObjectValueWithoutName());
 
-        holder = new FieldsExpositionHolder();
-        holder.expose(new Account()).withNameAndType("account", AccountEntity.class);
+        holder = new FieldsContainer();
+        holder.expose(new Account()).withNameAndMapping("account", AccountEntity.class);
         assertFalse(holder.hasOnlyOneObjectValueWithoutName());
     }
 
@@ -93,7 +92,7 @@ public class FieldExpositionHolderTest {
     public void test_build_with_pure_entity_value(){
         Account account = new Account();
         account.login = "jsonty";
-        holder.expose(account).withType(AccountEntity.class);
+        holder.expose(account).withMapping(AccountEntity.class);
         assertEquals("{\"username\":\"jsonty\"}", holder.build());
     }
 
@@ -114,10 +113,10 @@ public class FieldExpositionHolderTest {
         holder.expose(new int[]{1,2}).withName("ints");
         assertEquals("{\"ints\":[1,2]}", holder.build());
 
-        holder = new FieldsExpositionHolder();
+        holder = new FieldsContainer();
         Account account = new Account();
         account.login = "jsonty";
-        holder.expose(account).withNameAndType("account", AccountEntity.class);
+        holder.expose(account).withNameAndMapping("account", AccountEntity.class);
         assertEquals("{\"account\":{\"username\":\"jsonty\"}}", holder.build());
 
     }

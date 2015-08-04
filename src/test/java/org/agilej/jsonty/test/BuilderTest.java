@@ -9,14 +9,14 @@ import java.util.Map;
 import org.agilej.fava.util.FLists;
 import org.agilej.jsonty.JSONBuilder;
 import org.agilej.jsonty.JSONModel;
-import org.agilej.jsonty.support.AbstractJSONMoel;
+import org.agilej.jsonty.support.AbstractJSONModel;
 import org.junit.Test;
 
 
 public class BuilderTest {
 
     @Test
-    public void testPrimaryTypes(){
+    public void test_primary_types(){
         final int age = 12;
         final short s = 1;
         final long l = 1l;
@@ -24,7 +24,7 @@ public class BuilderTest {
         final float f = 1.23f;
         final double d = 1.25d;
         
-        JSONModel module = new AbstractJSONMoel() {
+        JSONModel module = new AbstractJSONModel() {
             public void config() {
                 expose(age).withName("int");        //int
                 expose('a').withName("char");       //char
@@ -55,10 +55,10 @@ public class BuilderTest {
 
 
     @Test
-    public void testStringEscape(){
+    public void test_string_escape(){
         final String name = "\"foo\" is not \"bar\". specials: \b\r\n\f\t\\/";
 
-        JSONModel module = new AbstractJSONMoel() {
+        JSONModel module = new AbstractJSONModel() {
           public void config() {
               expose(name).withName("login");     //string
           }
@@ -73,9 +73,9 @@ public class BuilderTest {
     
     @Test
 //    @Ignore
-    public void testArrayWithPrimaryTypes(){
+    public void test_array_with_primary_types(){
         
-        JSONModel module = new AbstractJSONMoel() {
+        JSONModel module = new AbstractJSONModel() {
             public void config() {
                 expose(new int[]{1,2,3}).withName("ints");        //ints
                 expose(new String[]{"one","two","three2"}).withName("strings");        //strings
@@ -90,9 +90,9 @@ public class BuilderTest {
     
     @Test
 //    @Ignore
-    public void testCollectionWithPrimaryTypes(){
+    public void test_ollection_with_primary_types(){
         
-        JSONModel module = new AbstractJSONMoel() {
+        JSONModel module = new AbstractJSONModel() {
             public void config() {
                 expose(FLists.$(1, 2, 3)).withName("ints");        //ints
                 expose(FLists.$("one","two","three")).withName("strings");        //strings
@@ -106,13 +106,13 @@ public class BuilderTest {
     }
 
     @Test
-    public void testMapWithPrimaryTypes(){
+    public void test_map_with_primary_types(){
         
         final Map<String, Object> map = new LinkedHashMap<String, Object>();
         map.put("name", "jam\"es");
         map.put("age", 18);
         
-        JSONModel module = new AbstractJSONMoel() {
+        JSONModel module = new AbstractJSONModel() {
             public void config() {
                 expose(map).withName("map");        //map
             }
@@ -125,8 +125,8 @@ public class BuilderTest {
     
     @Test
 //  @Ignore
-  public void testOnlyOneCollectionDataWithName(){
-      JSONModel module = new AbstractJSONMoel() {
+  public void test_only_one_collection_data_with_name(){
+      JSONModel module = new AbstractJSONModel() {
           public void config() {
               expose(FLists.$(1, 2, 3)).withName(null);        //ints
           }
@@ -139,8 +139,8 @@ public class BuilderTest {
     
     @Test
 //  @Ignore
-  public void testOnlyOneCollectionDataWithoutName(){
-      JSONModel module = new AbstractJSONMoel() {
+  public void test_only_one_collection_data_without_name(){
+      JSONModel module = new AbstractJSONModel() {
           public void config() {
               expose(FLists.$(1, -2, 3));
           }
@@ -154,7 +154,7 @@ public class BuilderTest {
     @Test
 //  @Ignore
   public void test_null_value(){
-      JSONModel module = new AbstractJSONMoel() {
+      JSONModel module = new AbstractJSONModel() {
           public void config() {
               expose(null).withName("null");
           }
@@ -168,7 +168,7 @@ public class BuilderTest {
     @Test
 //  @Ignore
   public void test_bool_value(){
-      JSONModel module = new AbstractJSONMoel() {
+      JSONModel module = new AbstractJSONModel() {
           public void config() {
               expose(true).withName("bool");
           }

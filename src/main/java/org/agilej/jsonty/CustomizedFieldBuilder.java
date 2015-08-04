@@ -4,10 +4,10 @@ package org.agilej.jsonty;
 
 public interface CustomizedFieldBuilder extends ConditionalFieldBuilder {
     
-    public ConditionalFieldBuilder withNameAndType(String name, Class<? extends EntityModel> entityClass);
+    public ConditionalFieldBuilder withNameAndMapping(String name, Class<? extends EntityMapper> entityMapperClass);
 
     public ConditionalFieldBuilder withName(String string);
     
-    public ConditionalFieldBuilder withType(Class<? extends EntityModel> entityClass);
+    public ConditionalFieldBuilder withMapping(Class<? extends EntityMapper> entityMapperClass);
     
 }
