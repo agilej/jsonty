@@ -1,83 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta charset="UTF-8">
     <title>Jsonty by agilej</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
+    <section class="page-header">
+      <h1 class="project-name">Jsonty</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/agilej/jsonty" class="btn">View on GitHub</a>
+      <a href="https://github.com/agilej/jsonty/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/agilej/jsonty/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-        <header>
-          <h1>Jsonty</h1>
-          <h2></h2>
-        </header>
-
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/agilej/jsonty/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/agilej/jsonty/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/agilej/jsonty" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <h1>
-<a id="jsonty" class="anchor" href="#jsonty" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jsonty</h1>
+    <section class="main-content">
+      <h2>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use</h2>
 
 <p>Make fun with JSON serializer.</p>
 
 <div class="highlight highlight-java"><pre>
-    <span class="pl-s">final</span> <span class="pl-stj">Account</span> account <span class="pl-k">=</span> <span class="pl-c1">...</span>;
-    <span class="pl-s">final</span> <span class="pl-st">int</span> status <span class="pl-k">=</span> <span class="pl-c1">20</span>;
+    <span class="pl-k">final</span> <span class="pl-smi">Account</span> account <span class="pl-k">=</span> <span class="pl-c1">...</span>;
+    <span class="pl-k">final</span> <span class="pl-k">int</span> status <span class="pl-k">=</span> <span class="pl-c1">20</span>;
 
-    <span class="pl-stj">JSONModel</span> model <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-stj">JSONModel</span>() {
-        <span class="pl-s">public</span> <span class="pl-st">void</span> <span class="pl-en">config</span>(<span class="pl-stj">FieldExposer</span> <span class="pl-v">exposer</span>) {
-            exposer<span class="pl-k">.</span>expose(status)<span class="pl-k">.</span>withName(<span class="pl-s1"><span class="pl-pds">"</span>status<span class="pl-pds">"</span></span>);
-            exposer<span class="pl-k">.</span>expose(account)<span class="pl-k">.</span>withNameAndType(<span class="pl-s1"><span class="pl-pds">"</span>account<span class="pl-pds">"</span></span>, <span class="pl-stj">AccountEntity</span><span class="pl-k">.</span>class);
+    <span class="pl-smi">JSONModel</span> model <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">JSONModel</span>() {
+        <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">config</span>(<span class="pl-smi">FieldExposer</span> <span class="pl-v">exposer</span>) {
+            exposer<span class="pl-k">.</span>expose(status)<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>status<span class="pl-pds">"</span></span>);
+            exposer<span class="pl-k">.</span>expose(account)<span class="pl-k">.</span>withNameAndType(<span class="pl-s"><span class="pl-pds">"</span>account<span class="pl-pds">"</span></span>, <span class="pl-smi">AccountEntity</span><span class="pl-k">.</span>class);
         }
     };
 
+    <span class="pl-c">//or use lambda in java8</span>
+    <span class="pl-smi">JSONModel</span> model <span class="pl-k">=</span> e <span class="pl-k">-</span><span class="pl-k">&gt;</span> {
+        e<span class="pl-k">.</span>expose(status)<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>status<span class="pl-pds">"</span></span>);
+        e<span class="pl-k">.</span>expose(account)<span class="pl-k">.</span>withNameAndType(<span class="pl-s"><span class="pl-pds">"</span>account<span class="pl-pds">"</span></span>, <span class="pl-smi">AccountEntity</span><span class="pl-k">.</span>class);
+    }
+
     <span class="pl-c">//to json</span>
-    <span class="pl-stj">String</span> json <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-stj">JSONBuilder</span>(model)<span class="pl-k">.</span>build();
+    <span class="pl-smi">String</span> json <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">JSONBuilder</span>(model)<span class="pl-k">.</span>build();
 
     <span class="pl-c">//or write to stream, not implemented yet</span>
-    <span class="pl-k">new</span> <span class="pl-stj">JSONBuilder</span>(model)<span class="pl-k">.</span>build(writer);
+    <span class="pl-k">new</span> <span class="pl-smi">JSONBuilder</span>(model)<span class="pl-k">.</span>build(writer);
 </pre></div>
 
 <p>Where <code>AccountEntity</code> implement <code>EntityModel</code> interface and defined fields will be exposed to json result.</p>
 
-<div class="highlight highlight-java"><pre>  <span class="pl-s">public</span> <span class="pl-s">class</span> <span class="pl-en">AccountEntity</span> <span class="pl-s">implements</span> <span class="pl-e">EntityModel&lt;<span class="pl-stj">Account</span>&gt;</span>{
+<div class="highlight highlight-java"><pre>
+    <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">AccountEntity</span> <span class="pl-k">implements</span> <span class="pl-e">EntityModel&lt;<span class="pl-smi">Account</span>&gt;</span>{
 
-    <span class="pl-s">public</span> <span class="pl-st">void</span> <span class="pl-en">config</span>(<span class="pl-stj">Account</span> <span class="pl-v">account</span>, <span class="pl-stj">FieldExposer</span> <span class="pl-v">exposer</span>, <span class="pl-stj">Environment</span> <span class="pl-v">env</span>) {
-        exposer<span class="pl-k">.</span>expose(account<span class="pl-k">.</span>getLogin())<span class="pl-k">.</span>withName(<span class="pl-s1"><span class="pl-pds">"</span>loginName<span class="pl-pds">"</span></span>);
-        exposer<span class="pl-k">.</span>expose(account<span class="pl-k">.</span>getAvatar())<span class="pl-k">.</span>withName(<span class="pl-s1"><span class="pl-pds">"</span>avatar<span class="pl-pds">"</span></span>);
+        <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">config</span>(<span class="pl-smi">Account</span> <span class="pl-v">account</span>, <span class="pl-smi">FieldExposer</span> <span class="pl-v">exposer</span>, <span class="pl-smi">Environment</span> <span class="pl-v">env</span>) {
+            exposer<span class="pl-k">.</span>expose(account<span class="pl-k">.</span>getLogin())<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>loginName<span class="pl-pds">"</span></span>);
+            exposer<span class="pl-k">.</span>expose(account<span class="pl-k">.</span>getAvatar())<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>avatar<span class="pl-pds">"</span></span>);
 
-        <span class="pl-c">//you can use nested SrapeEntity too</span>
-        exposer<span class="pl-k">.</span>expose(account<span class="pl-k">.</span>getProfile())<span class="pl-k">.</span>withNameAndType(<span class="pl-s1"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>, <span class="pl-stj">ProfileEntity</span><span class="pl-k">.</span>class);
-    }
+            <span class="pl-c">//you can use nested EntityModel too</span>
+            exposer<span class="pl-k">.</span>expose(account<span class="pl-k">.</span>getProfile())<span class="pl-k">.</span>withNameAndType(<span class="pl-s"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>, <span class="pl-smi">ProfileEntity</span><span class="pl-k">.</span>class);
+        }
 
-  }</pre></div>
+    }</pre></div>
 
-<p><a href="http://agilej.github.io/jsonty">http://agilej.github.io/jsonty</a></p>
-        </section>
+<h2>
+<a id="extra" class="anchor" href="#extra" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extra</h2>
 
-        <footer>
-          Jsonty is maintained by <a href="https://github.com/agilej">agilej</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
+<p>You can set a condition for field expose use <code>when</code> or <code>unless</code></p>
 
-        
-      </div>
-    </div>
+<div class="highlight highlight-java"><pre>
+    exposer<span class="pl-k">.</span>expose(<span class="pl-s"><span class="pl-pds">"</span>xxxx<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>xxxx<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>when(age <span class="pl-k">&gt;</span> <span class="pl-c1">18</span>);
+    <span class="pl-c">//or use unless</span>
+    exposer<span class="pl-k">.</span>expose(<span class="pl-s"><span class="pl-pds">"</span>xxxx<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>xxxx<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>unless(age <span class="pl-k">&lt;=</span> <span class="pl-c1">18</span>);</pre></div>
+
+<p>You can alse pass enviroment use <code>plusEnv</code>and do some extra calculation while exposing field</p>
+
+<div class="highlight highlight-java"><pre>
+    <span class="pl-smi">Enviroment</span> env <span class="pl-k">=</span> <span class="pl-smi">Enviroments</span><span class="pl-k">.</span>envWith(<span class="pl-s"><span class="pl-pds">"</span>isAdmin<span class="pl-pds">"</span></span>, user<span class="pl-k">.</span>isAdmin()) 
+    exposer<span class="pl-k">.</span>expose(user<span class="pl-k">.</span>profile)<span class="pl-k">.</span>withNameAndType(<span class="pl-s"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>, <span class="pl-smi">ProfileEntity</span><span class="pl-k">.</span>class)<span class="pl-k">.</span>plusEnv(env);
+
+    <span class="pl-c">//then in ProfileEntity</span>
+
+    <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ProfileEntity</span> <span class="pl-k">implements</span> <span class="pl-e">EntityModel&lt;<span class="pl-smi">Profile</span>&gt;</span>{
+
+        <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">config</span>(<span class="pl-smi">Profile</span> <span class="pl-v">profile</span>, <span class="pl-smi">FieldExposer</span> <span class="pl-v">exposer</span>, <span class="pl-smi">Environment</span> <span class="pl-v">env</span>) {
+            exposer<span class="pl-k">.</span>expose(xxx)<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>xx<span class="pl-pds">"</span></span>);
+            <span class="pl-k">if</span>(env<span class="pl-k">.</span>contains(<span class="pl-s"><span class="pl-pds">"</span>isAdmin<span class="pl-pds">"</span></span>) <span class="pl-k">&amp;&amp;</span> env<span class="pl-k">.</span>get(<span class="pl-s"><span class="pl-pds">"</span>isAdmin<span class="pl-pds">"</span></span>)){
+                exposer<span class="pl-k">.</span>expose(xxx)<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>onlyAviableForAdmin<span class="pl-pds">"</span></span>); 
+            }
+        }
+    }</pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/agilej/jsonty">Jsonty</a> is maintained by <a href="https://github.com/agilej">agilej</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
   </body>
 </html>
