@@ -82,6 +82,20 @@ public class JSONBuilderTest {
         new JSONBuilder(model).build((Writer) null);
     }
 
+    @Test
+    public void test_expose_primitive_value_without_name(){
+        JSONModel model = new JSONModel() {
+            @Override
+            public void config(FieldExposer exposer) {
+                exposer.expose("{'a': 1}");
+            }
+        };
+
+        System.out.println(new JSONBuilder(model).build());
+
+    }
+
+
    /*
     @Test
     public void test_is_pure_array_expose(){

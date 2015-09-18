@@ -1,9 +1,8 @@
 [![Build Status](https://drone.io/github.com/agilej/jsonty/status.png)](https://drone.io/github.com/agilej/jsonty/latest)
 
-## How to use
-
 Make fun with JSON serializer.
 
+## How to use
 
 ```java
 
@@ -31,17 +30,17 @@ Make fun with JSON serializer.
 
 ```
 
-Where `AccountEntity` implement `EntityModel` interface and defined fields will be exposed to json result.
+Where `AccountEntity` implement `EntityMapper` interface and defined fields will be exposed to json result.
 
 ```java
 
-    public class AccountEntity implements EntityModel<Account>{
+    public class AccountEntity implements EntityMapper<Account>{
         
         public void config(Account account, FieldExposer exposer, Environment env) {
             exposer.expose(account.getLogin()).withName("loginName");
             exposer.expose(account.getAvatar()).withName("avatar");
 
-            //you can use nested EntityModel too
+            //you can use nested EntityMapper too
             exposer.expose(account.getProfile()).withNameAndType("profile", ProfileEntity.class);
         }
 
@@ -68,7 +67,7 @@ You can alse pass enviroment use `plusEnv`and do some extra calculation while ex
 
     //then in ProfileEntity
 
-    public class ProfileEntity implements EntityModel<Profile>{
+    public class ProfileEntity implements EntityMapper<Profile>{
 
         public void config(Profile profile, FieldExposer exposer, Environment env) {
             exposer.expose(xxx).withName("xx");
