@@ -12,14 +12,14 @@ Make fun with JSON serializer.
     JSONModel model = new JSONModel() {
         public void config(FieldExposer exposer) {
             exposer.expose(status).withName("status");
-            exposer.expose(account).withNameAndType("account", AccountEntity.class);
+            exposer.expose(account).withNameAndMapping("account", AccountEntity.class);
         }
     };
 
     //or use lambda in java8
     JSONModel model = e -> {
         e.expose(status).withName("status");
-        e.expose(account).withNameAndType("account", AccountEntity.class);
+        e.expose(account).withNameAndMapping("account", AccountEntity.class);
     }
 
     //to json
@@ -41,7 +41,7 @@ Where `AccountEntity` implement `EntityMapper` interface and defined fields will
             exposer.expose(account.getAvatar()).withName("avatar");
 
             //you can use nested EntityMapper too
-            exposer.expose(account.getProfile()).withNameAndType("profile", ProfileEntity.class);
+            exposer.expose(account.getProfile()).withNameAndMapping("profile", ProfileEntity.class);
         }
 
     }
@@ -63,7 +63,7 @@ You can alse pass enviroment use `plusEnv`and do some extra calculation while ex
 ```java
 
     Enviroment env = Enviroments.envWith("isAdmin", user.isAdmin()) 
-    exposer.expose(user.profile).withNameAndType("profile", ProfileEntity.class).plusEnv(env);
+    exposer.expose(user.profile).withNameAndMapping("profile", ProfileEntity.class).plusEnv(env);
 
     //then in ProfileEntity
 
