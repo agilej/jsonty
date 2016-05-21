@@ -18,3 +18,15 @@ dependencies {
     testCompile 'junit:junit:4.0'
     testCompile 'org.agilej:fava:0.1'
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.9'
+}
+
+compileJava {
+    //enable compilation in a separate daemon process
+    //options.fork = true
+
+    //enable incremental compilation
+    options.incremental = true
+}
