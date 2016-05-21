@@ -22,6 +22,8 @@ For Gradle Project
 
 ```
 
+Then write your code ^_^:
+
 ```java
 
     final Account account = ...;
