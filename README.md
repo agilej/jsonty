@@ -4,6 +4,24 @@ Make fun with JSON serializer.
 
 ## How to use
 
+For Maven project:
+
+```xml
+  <dependency>
+      <groupId>org.agilej</groupId>
+      <artifactId>jsonty</artifactId>
+      <version>0.1</version>
+  </dependency>
+```
+
+For Gradle Project
+
+```groovy
+  
+  compile group: 'org.agilej', name: 'jsonty', version: '0.1'
+
+```
+
 ```java
 
     final Account account = ...;
