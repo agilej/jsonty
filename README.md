@@ -98,4 +98,11 @@ You can alse pass enviroment use `plusEnv`and do some extra calculation while ex
     }
 ```
 
-http://agilej.github.io/jsonty
+
+## TODO
+
+These features are considered to be implement in version 0.2.
+
+* Buid json to `Writer` directly
+* Beauty json print support
+
