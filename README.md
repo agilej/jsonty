@@ -32,7 +32,7 @@ Then write your code ^_^:
     JSONModel model = new JSONModel() {
         public void config(FieldExposer exposer) {
             exposer.expose(status).withName("status");
-            exposer.expose(account).withNameAndMapping("account", AccountEntity.class);
+            exposer.expose(account).withNameAndMapping("account", AccountEntity.class);   //use entity mapping expose
         }
     };
 
@@ -52,7 +52,7 @@ Then write your code ^_^:
 
 ## Entity Mapping
 
-Where `AccountEntity` implement `EntityMapper` interface and defined fields will be exposed to json result.
+Don't like other json serialization library(for example Gson) use annotation to declare json object's fields,  Jsonty use  entity-mapping strategy. All you need is implement `EntityMapper` interface, define fields will be exposed to json result; then use this mapping with `expose(xx).withMapping()`.
 
 ```java
 
