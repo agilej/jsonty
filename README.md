@@ -50,6 +50,8 @@ Then write your code ^_^:
 
 ```
 
+## Entity Mapping
+
 Where `AccountEntity` implement `EntityMapper` interface and defined fields will be exposed to json result.
 
 ```java
