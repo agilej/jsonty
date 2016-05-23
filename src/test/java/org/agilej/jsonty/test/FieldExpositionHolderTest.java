@@ -1,7 +1,6 @@
 package org.agilej.jsonty.test;
 
 import static org.junit.Assert.*;
-import org.agilej.fava.util.FLists;
 
 import org.agilej.jsonty.FieldsContainer;
 import org.agilej.jsonty.mapping.Account;
@@ -9,6 +8,7 @@ import org.agilej.jsonty.mapping.AccountEntity;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -56,7 +56,7 @@ public class FieldExpositionHolderTest {
         assertTrue(holder.hasOnlyOneIterableValueWithoutName());
         
         holder = new FieldsContainer();
-        holder.expose(FLists.create(1,2,3));
+        holder.expose(Arrays.asList(1, 2, 3));
         assertTrue(holder.hasOnlyOneIterableValueWithoutName());
     }
 

@@ -6,10 +6,10 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
-import org.agilej.fava.util.FLists;
 
 import org.agilej.jsonty.EntityMapper;
 import org.agilej.jsonty.Environment;
@@ -28,8 +28,8 @@ public class FieldBuilderTest {
         
         builder = new FieldBuilder(2);
         assertEquals(2, builder.getValue());
-        
-        List<String> object = FLists.newEmptyList();
+
+        List<String> object = new ArrayList<>();
         builder = new FieldBuilder(object);
         assertSame(object, builder.getValue());
     }
@@ -37,7 +37,7 @@ public class FieldBuilderTest {
     @Test
     public void test_build_with_name(){
 
-        FieldBuilder fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
+        FieldBuilder fieldBuilder = new FieldBuilder(Arrays.asList(1, 2, 3));
         
         fieldBuilder.withName("ids");
         
@@ -64,7 +64,7 @@ public class FieldBuilderTest {
     
     @Test
     public void test_condition(){
-        FieldBuilder fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
+        FieldBuilder fieldBuilder = new FieldBuilder(Arrays.asList(1,2,3));
         
         fieldBuilder.withName("ids");
         
@@ -75,19 +75,19 @@ public class FieldBuilderTest {
         assertTrue(fieldBuilder.hasCondition());
         assertFalse(fieldBuilder.conditionMatched());
 
-        fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
+        fieldBuilder = new FieldBuilder(Arrays.asList(1,2,3));
         fieldBuilder.withName("ids").when(1 < 2);;
         assertTrue(fieldBuilder.hasCondition());
         assertTrue(fieldBuilder.conditionMatched());
 
-        fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
+        fieldBuilder = new FieldBuilder(Arrays.asList(1,2,3));
         int age = 15;
         fieldBuilder.withName("ids").unless(age < 18);;
         assertTrue(fieldBuilder.hasCondition());
         assertFalse(fieldBuilder.conditionMatched());
 
 
-        fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
+        fieldBuilder = new FieldBuilder(Arrays.asList(1,2,3));
         fieldBuilder.withName("ids").unless(age > 18);;
         assertTrue(fieldBuilder.hasCondition());
         assertTrue(fieldBuilder.conditionMatched());
@@ -95,7 +95,7 @@ public class FieldBuilderTest {
     
     @Test
     public void test_collection_value(){
-        FieldBuilder fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
+        FieldBuilder fieldBuilder = new FieldBuilder(Arrays.asList(1,2,3));
         assertTrue(fieldBuilder.isCollectionValue());
         
         fieldBuilder = new FieldBuilder(new int[]{1,3,5});
@@ -120,7 +120,7 @@ public class FieldBuilderTest {
     @SuppressWarnings("rawtypes")
     @Test
     public void test_has_entity_type(){
-        FieldBuilder fieldBuilder = new FieldBuilder(FLists.create(1,2,3));
+        FieldBuilder fieldBuilder = new FieldBuilder(Arrays.asList(1,2,3));
         
         assertFalse(fieldBuilder.hasEntityType());
         

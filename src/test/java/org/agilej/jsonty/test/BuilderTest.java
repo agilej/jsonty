@@ -3,10 +3,10 @@ package org.agilej.jsonty.test;
 import static org.junit.Assert.assertEquals;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.agilej.fava.util.FLists;
 import org.agilej.jsonty.JSONBuilder;
 import org.agilej.jsonty.JSONModel;
 import org.agilej.jsonty.support.AbstractJSONModel;
@@ -94,8 +94,8 @@ public class BuilderTest {
         
         JSONModel module = new AbstractJSONModel() {
             public void config() {
-                expose(FLists.$(1, 2, 3)).withName("ints");        //ints
-                expose(FLists.$("one","two","three")).withName("strings");        //strings
+                expose(Arrays.asList(1, 2, 3)).withName("ints");        //ints
+                expose(Arrays.asList("one","two","three")).withName("strings");        //strings
                 
             }
         };
@@ -128,7 +128,7 @@ public class BuilderTest {
   public void test_only_one_collection_data_with_name(){
       JSONModel module = new AbstractJSONModel() {
           public void config() {
-              expose(FLists.$(1, 2, 3)).withName(null);        //ints
+              expose(Arrays.asList(1, 2, 3)).withName(null);        //ints
           }
       };
       
@@ -142,7 +142,7 @@ public class BuilderTest {
   public void test_only_one_collection_data_without_name(){
       JSONModel module = new AbstractJSONModel() {
           public void config() {
-              expose(FLists.$(1, -2, 3));
+              expose(Arrays.asList(1, -2, 3));
           }
       };
       
