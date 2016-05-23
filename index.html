@@ -19,26 +19,44 @@
     </section>
 
     <section class="main-content">
-      <h2>
-<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use</h2>
+      <p><a href="https://drone.io/github.com/agilej/jsonty/latest"><img src="https://drone.io/github.com/agilej/jsonty/status.png" alt="Build Status"></a></p>
 
 <p>Make fun with JSON serializer.</p>
 
-<div class="highlight highlight-java"><pre>
+<h2>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to use</h2>
+
+<p>For Maven project:</p>
+
+<div class="highlight highlight-text-xml"><pre>  &lt;<span class="pl-ent">dependency</span>&gt;
+      &lt;<span class="pl-ent">groupId</span>&gt;org.agilej&lt;/<span class="pl-ent">groupId</span>&gt;
+      &lt;<span class="pl-ent">artifactId</span>&gt;jsonty&lt;/<span class="pl-ent">artifactId</span>&gt;
+      &lt;<span class="pl-ent">version</span>&gt;0.1&lt;/<span class="pl-ent">version</span>&gt;
+  &lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<p>For Gradle Project</p>
+
+<div class="highlight highlight-source-groovy"><pre>
+  compile <span class="pl-c1">group</span>: <span class="pl-s"><span class="pl-pds">'</span>org.agilej<span class="pl-pds">'</span></span>, <span class="pl-c1">name</span>: <span class="pl-s"><span class="pl-pds">'</span>jsonty<span class="pl-pds">'</span></span>, <span class="pl-c1">version</span>: <span class="pl-s"><span class="pl-pds">'</span>0.1<span class="pl-pds">'</span></span>
+</pre></div>
+
+<p>Then write your code ^_^:</p>
+
+<div class="highlight highlight-source-java"><pre>
     <span class="pl-k">final</span> <span class="pl-smi">Account</span> account <span class="pl-k">=</span> <span class="pl-c1">...</span>;
     <span class="pl-k">final</span> <span class="pl-k">int</span> status <span class="pl-k">=</span> <span class="pl-c1">20</span>;
 
     <span class="pl-smi">JSONModel</span> model <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">JSONModel</span>() {
         <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">config</span>(<span class="pl-smi">FieldExposer</span> <span class="pl-v">exposer</span>) {
             exposer<span class="pl-k">.</span>expose(status)<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>status<span class="pl-pds">"</span></span>);
-            exposer<span class="pl-k">.</span>expose(account)<span class="pl-k">.</span>withNameAndType(<span class="pl-s"><span class="pl-pds">"</span>account<span class="pl-pds">"</span></span>, <span class="pl-smi">AccountEntity</span><span class="pl-k">.</span>class);
+            exposer<span class="pl-k">.</span>expose(account)<span class="pl-k">.</span>withNameAndMapping(<span class="pl-s"><span class="pl-pds">"</span>account<span class="pl-pds">"</span></span>, <span class="pl-smi">AccountEntity</span><span class="pl-k">.</span>class);
         }
     };
 
     <span class="pl-c">//or use lambda in java8</span>
     <span class="pl-smi">JSONModel</span> model <span class="pl-k">=</span> e <span class="pl-k">-</span><span class="pl-k">&gt;</span> {
         e<span class="pl-k">.</span>expose(status)<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>status<span class="pl-pds">"</span></span>);
-        e<span class="pl-k">.</span>expose(account)<span class="pl-k">.</span>withNameAndType(<span class="pl-s"><span class="pl-pds">"</span>account<span class="pl-pds">"</span></span>, <span class="pl-smi">AccountEntity</span><span class="pl-k">.</span>class);
+        e<span class="pl-k">.</span>expose(account)<span class="pl-k">.</span>withNameAndMapping(<span class="pl-s"><span class="pl-pds">"</span>account<span class="pl-pds">"</span></span>, <span class="pl-smi">AccountEntity</span><span class="pl-k">.</span>class);
     }
 
     <span class="pl-c">//to json</span>
@@ -48,40 +66,40 @@
     <span class="pl-k">new</span> <span class="pl-smi">JSONBuilder</span>(model)<span class="pl-k">.</span>build(writer);
 </pre></div>
 
-<p>Where <code>AccountEntity</code> implement <code>EntityModel</code> interface and defined fields will be exposed to json result.</p>
+<p>Where <code>AccountEntity</code> implement <code>EntityMapper</code> interface and defined fields will be exposed to json result.</p>
 
-<div class="highlight highlight-java"><pre>
-    <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">AccountEntity</span> <span class="pl-k">implements</span> <span class="pl-e">EntityModel&lt;<span class="pl-smi">Account</span>&gt;</span>{
+<div class="highlight highlight-source-java"><pre>
+    <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">AccountEntity</span> <span class="pl-k">implements</span> <span class="pl-e">EntityMapper&lt;<span class="pl-smi">Account</span>&gt;</span>{
 
         <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">config</span>(<span class="pl-smi">Account</span> <span class="pl-v">account</span>, <span class="pl-smi">FieldExposer</span> <span class="pl-v">exposer</span>, <span class="pl-smi">Environment</span> <span class="pl-v">env</span>) {
             exposer<span class="pl-k">.</span>expose(account<span class="pl-k">.</span>getLogin())<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>loginName<span class="pl-pds">"</span></span>);
             exposer<span class="pl-k">.</span>expose(account<span class="pl-k">.</span>getAvatar())<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>avatar<span class="pl-pds">"</span></span>);
 
-            <span class="pl-c">//you can use nested EntityModel too</span>
-            exposer<span class="pl-k">.</span>expose(account<span class="pl-k">.</span>getProfile())<span class="pl-k">.</span>withNameAndType(<span class="pl-s"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>, <span class="pl-smi">ProfileEntity</span><span class="pl-k">.</span>class);
+            <span class="pl-c">//you can use nested EntityMapper too</span>
+            exposer<span class="pl-k">.</span>expose(account<span class="pl-k">.</span>getProfile())<span class="pl-k">.</span>withNameAndMapping(<span class="pl-s"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>, <span class="pl-smi">ProfileEntity</span><span class="pl-k">.</span>class);
         }
 
     }</pre></div>
 
 <h2>
-<a id="extra" class="anchor" href="#extra" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extra</h2>
+<a id="extra" class="anchor" href="#extra" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Extra</h2>
 
 <p>You can set a condition for field expose use <code>when</code> or <code>unless</code></p>
 
-<div class="highlight highlight-java"><pre>
+<div class="highlight highlight-source-java"><pre>
     exposer<span class="pl-k">.</span>expose(<span class="pl-s"><span class="pl-pds">"</span>xxxx<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>xxxx<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>when(age <span class="pl-k">&gt;</span> <span class="pl-c1">18</span>);
     <span class="pl-c">//or use unless</span>
     exposer<span class="pl-k">.</span>expose(<span class="pl-s"><span class="pl-pds">"</span>xxxx<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>xxxx<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>unless(age <span class="pl-k">&lt;=</span> <span class="pl-c1">18</span>);</pre></div>
 
 <p>You can alse pass enviroment use <code>plusEnv</code>and do some extra calculation while exposing field</p>
 
-<div class="highlight highlight-java"><pre>
+<div class="highlight highlight-source-java"><pre>
     <span class="pl-smi">Enviroment</span> env <span class="pl-k">=</span> <span class="pl-smi">Enviroments</span><span class="pl-k">.</span>envWith(<span class="pl-s"><span class="pl-pds">"</span>isAdmin<span class="pl-pds">"</span></span>, user<span class="pl-k">.</span>isAdmin()) 
-    exposer<span class="pl-k">.</span>expose(user<span class="pl-k">.</span>profile)<span class="pl-k">.</span>withNameAndType(<span class="pl-s"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>, <span class="pl-smi">ProfileEntity</span><span class="pl-k">.</span>class)<span class="pl-k">.</span>plusEnv(env);
+    exposer<span class="pl-k">.</span>expose(user<span class="pl-k">.</span>profile)<span class="pl-k">.</span>withNameAndMapping(<span class="pl-s"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>, <span class="pl-smi">ProfileEntity</span><span class="pl-k">.</span>class)<span class="pl-k">.</span>plusEnv(env);
 
     <span class="pl-c">//then in ProfileEntity</span>
 
-    <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ProfileEntity</span> <span class="pl-k">implements</span> <span class="pl-e">EntityModel&lt;<span class="pl-smi">Profile</span>&gt;</span>{
+    <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ProfileEntity</span> <span class="pl-k">implements</span> <span class="pl-e">EntityMapper&lt;<span class="pl-smi">Profile</span>&gt;</span>{
 
         <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">config</span>(<span class="pl-smi">Profile</span> <span class="pl-v">profile</span>, <span class="pl-smi">FieldExposer</span> <span class="pl-v">exposer</span>, <span class="pl-smi">Environment</span> <span class="pl-v">env</span>) {
             exposer<span class="pl-k">.</span>expose(xxx)<span class="pl-k">.</span>withName(<span class="pl-s"><span class="pl-pds">"</span>xx<span class="pl-pds">"</span></span>);
@@ -90,6 +108,16 @@
             }
         }
     }</pre></div>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO</h2>
+
+<p>These features are considered to be implement in version 0.2.</p>
+
+<ul>
+<li>Buid json to <code>Writer</code> directly</li>
+<li>Beauty json print support</li>
+</ul>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/agilej/jsonty">Jsonty</a> is maintained by <a href="https://github.com/agilej">agilej</a>.</span>
