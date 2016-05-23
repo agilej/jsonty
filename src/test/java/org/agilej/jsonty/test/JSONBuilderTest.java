@@ -1,129 +1,186 @@
 package org.agilej.jsonty.test;
-import static org.agilej.jsonty.util.StringUtil.jsonPair;
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
-import java.io.Writer;
+import java.io.*;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import org.agilej.jsonty.FieldExposer;
 import org.agilej.jsonty.JSONBuilder;
 import org.agilej.jsonty.JSONModel;
-import org.agilej.jsonty.mapping.Account;
-import org.agilej.jsonty.mapping.AccountEntity;
-import org.agilej.jsonty.model.Controller;
+import org.agilej.jsonty.support.AbstractJSONModel;
 import org.junit.Test;
 
+
 public class JSONBuilderTest {
+
+    @Test
+    public void test_primary_types(){
+        final int age = 12;
+        final short s = 1;
+        final long l = 1l;
+        final String name = "srape";
+        final float f = 1.23f;
+        final double d = 1.25d;
+        
+        JSONModel module = new AbstractJSONModel() {
+            public void config() {
+                expose(age).withName("int");        //int
+                expose('a').withName("char");       //char
+                expose((byte)1).withName("byte");   //byte
+                expose(s).withName("short");        //short
+                expose(l).withName("long");         //long
+                expose(f).withName("float");        //float
+                expose(d).withName("double");       //double
+                expose(name).withName("login");     //string
+            }
+        };
+        
+        //should be {"int":12,"char":"a","byte":1,"short":1,"long":1,"float":1.23,"double":1.25,"login":"srape"}
+        String expected = "{\"int\":12,\"char\":\"a\",\"byte\":1,\"short\":1,\"long\":1,\"float\":1.23,\"double\":1.25,\"login\":\"srape\"}";
+        assertEquals(expected, build(module));
+
+        Writer fw = new StringWriter();
+        new JSONBuilder(module).build(fw);
+//        try {
+//            fw = new FileWriter(new File("jsonty_resutl.json"));
+//            new JSONBuilder(module).build(fw);
+//            fw.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+
+
+    @Test
+    public void test_string_escape(){
+        final String name = "\"foo\" is not \"bar\". specials: \b\r\n\f\t\\/";
+
+        JSONModel module = new AbstractJSONModel() {
+          public void config() {
+              expose(name).withName("login");     //string
+          }
+        };
+
+        //should be {"int":12,"char":"a","byte":1,"short":1,"long":1,"float":1.23,"double":1.25,"login":"srape"}
+        String expected = "{\"login\":\"\\\"foo\\\" is not \\\"bar\\\". specials: \\b\\r\\n\\f\\t\\\\\\/\"}";
+
+        assertEquals(expected, build(module));
+    }
+    
     
     @Test
-    public void test_integration(){
-        JSONBuilder builder = new Controller().jsonResult();
+//    @Ignore
+    public void test_array_with_primary_types(){
         
-        System.out.println(builder.build());
+        JSONModel module = new AbstractJSONModel() {
+            public void config() {
+                expose(new int[]{1,2,3}).withName("ints");        //ints
+                expose(new String[]{"one","two","three2"}).withName("strings");        //strings
+                
+            }
+        };
         
-/*
-        assertEquals(2, builder.fieldsCount());
-        
-        FieldBuilder impl = builder.exposedFields().get(0);
-        assertEquals("users", impl.getName());
-        assertFalse(impl.conditionMatched());
-        assertNull(impl.getEntityClass());
-        
-        impl = builder.exposedFields().get(1);
-        assertEquals("account", impl.getName());
-        assertTrue(impl.conditionMatched());
-        assertTrue(impl.getEntityClass().equals(AccountEntity.class));
-*/
-        
+        String expected = "{\"ints\":[1,2,3],\"strings\":[\"one\",\"two\",\"three2\"]}";
+        assertEquals(expected, build(module));
+
     }
     
     @Test
-    public void test_build(){
-        JSONBuilder builder = new JSONBuilder(new JSONModel() {
-            @Override
-            public void config(FieldExposer exposer) {
-                exposer.expose("donny").withName("user").when(2 > 1);
-                exposer.expose("passwd").withName("password").when(1 > 2);
-                exposer.expose(23).withName("age");
+//    @Ignore
+    public void test_ollection_with_primary_types(){
+        
+        JSONModel module = new AbstractJSONModel() {
+            public void config() {
+                expose(Arrays.asList(1, 2, 3)).withName("ints");        //ints
+                expose(Arrays.asList("one","two","three")).withName("strings");        //strings
+                
             }
-        });
-        String expected = "{" + jsonPair("user", "donny", true) + "," + jsonPair("age", 23, false)+ "}";
-        assertEquals(expected, builder.build());
+        };
+        
+        String expected = "{\"ints\":[1,2,3],\"strings\":[\"one\",\"two\",\"three\"]}";
+        assertEquals(expected, build(module));
+
     }
 
     @Test
-    public void test_build_with_only_entity(){
-        final Account account = new Account();
-        account.login = "donny";
-
-        JSONModel model = new JSONModel() {
-            @Override
-            public void config(FieldExposer exposer) {
-                exposer.expose(account).withMapping(AccountEntity.class);
+    public void test_map_with_primary_types(){
+        
+        final Map<String, Object> map = new LinkedHashMap<String, Object>();
+        map.put("name", "jam\"es");
+        map.put("age", 18);
+        
+        JSONModel module = new AbstractJSONModel() {
+            public void config() {
+                expose(map).withName("map");        //map
             }
         };
-        String json = new JSONBuilder(model).build();
-
-        String expected = "{" + jsonPair("username", "donny", true) + "}";
-        assertEquals(expected, json);
+        
+        String expected = "{\"map\":{\"name\":\"jam\\\"es\",\"age\":18}}";
+        assertEquals(expected, build(module));
 
     }
-
-    @Test(expected = RuntimeException.class)
-    public void test_build_to_writer(){
-        JSONModel model = new JSONModel() {
-            @Override
-            public void config(FieldExposer exposer) {
-                exposer.expose(1).withName("one");
-            }
-        };
-        new JSONBuilder(model).build((Writer) null);
-    }
-
+    
     @Test
-    public void test_expose_primitive_value_without_name(){
-        JSONModel model = new JSONModel() {
-            @Override
-            public void config(FieldExposer exposer) {
-                exposer.expose("{'a': 1}");
-            }
-        };
+//  @Ignore
+  public void test_only_one_collection_data_with_name(){
+      JSONModel module = new AbstractJSONModel() {
+          public void config() {
+              expose(Arrays.asList(1, 2, 3)).withName(null);        //ints
+          }
+      };
+      
+      String exptected = "{\"\":[1,2,3]}";
+      assertEquals(exptected, build(module));
 
-        System.out.println(new JSONBuilder(model).build());
-
-    }
-
-
-   /*
+  }
+    
     @Test
-    public void test_is_pure_array_expose(){
-        JSONBuilder builder = new JSONBuilder(new JSONModel() {
-            @Override
-            public void config(FieldExposer exposer) {
-                exposer.expose(23).withName("age");
-            }
-        });
+//  @Ignore
+  public void test_only_one_collection_data_without_name(){
+      JSONModel module = new AbstractJSONModel() {
+          public void config() {
+              expose(Arrays.asList(1, -2, 3));
+          }
+      };
+      
+      String exptected = "[1,-2,3]";
+      assertEquals(exptected, build(module));
 
-        assertFalse(builder.hasOnlyOneIterableValueWithoutName());
+  }
+    
+    @Test
+//  @Ignore
+  public void test_null_value(){
+      JSONModel module = new AbstractJSONModel() {
+          public void config() {
+              expose(null).withName("null");
+          }
+      };
+      
+      String exptected = "{\"null\":null}";
+      assertEquals(exptected, build(module));
 
-        builder = new JSONBuilder(new JSONModel() {
-            @Override
-            public void config(FieldExposer exposer) {
-                exposer.expose(new int[]{1,2});
-            }
-        });
+  }
+    
+    @Test
+//  @Ignore
+  public void test_bool_value(){
+      JSONModel module = new AbstractJSONModel() {
+          public void config() {
+              expose(true).withName("bool");
+          }
+      };
+      
+      String expected = "{\"bool\":true}";
+      assertEquals(expected, build(module));
 
-        assertTrue(builder.hasOnlyOneIterableValueWithoutName());
+  }
 
-
+    private String build(JSONModel module){
+        return new JSONBuilder(module).build();
     }
-    */
+    
 }
-
-
-
-
-
-

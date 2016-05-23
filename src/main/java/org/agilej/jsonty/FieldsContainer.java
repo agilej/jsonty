@@ -68,7 +68,17 @@ public class FieldsContainer implements FieldExposer{
     }
 
     private boolean needOuterObjectWrap(){
-        return (!hasOnlyOneIterableValueWithoutName()) && (!hasOnlyOneObjectValueWithoutName());
+        if (this.exposedFields().size() == 0){
+            return true;
+        }
+        if (this.exposedFields().size() > 1) {
+            return true;
+        }
+        if (this.exposedFields().get(0).hasName()){
+            return true;
+        }
+        return false;
+//        return (!hasOnlyOneIterableValueWithoutName()) && (!hasOnlyOneObjectValueWithoutName());
     }
 
     /**

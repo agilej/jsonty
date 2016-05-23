@@ -1,9 +1,6 @@
 package org.agilej.jsonty.test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.agilej.jsonty.Environment;
 import org.agilej.jsonty.JSONBuilder;
@@ -18,6 +15,8 @@ import org.agilej.jsonty.support.AbstractJSONModel;
 import org.agilej.jsonty.support.Environments;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 
 public class EntityMapperTest {
@@ -35,7 +34,8 @@ public class EntityMapperTest {
             }
         };
 
-        System.out.println(build(module));
+        String expected = "{\"user\":{\"name\":\"donny\",\"isAdmin\":true}}";
+        assertEquals(expected, build(module));
     }
 
     @Test
@@ -48,7 +48,9 @@ public class EntityMapperTest {
             }
         };
 
-        System.out.println(build(module));
+        String expected =
+                "{\"user\":{\"name\":\"donny\",\"age\":30,\"profile\":{\"address\":\"Beijing China\"},\"posts\":[{\"title\":\"post 1\"},{\"title\":\"post 2\"},{\"title\":\"post 3\"}]}}";
+        assertEquals(expected, build(module));
     }
     
     @Test
@@ -61,7 +63,8 @@ public class EntityMapperTest {
             }
         };
 
-        System.out.println(build(module));
+        String expected = "[{\"title\":\"post 1\"},{\"title\":\"post 2\"},{\"title\":\"post 3\"}]";
+        assertEquals(expected, build(module));
     }
     
     @Test
@@ -69,17 +72,16 @@ public class EntityMapperTest {
     public void test_mapping_with_map_value(){
         final User user = domainUser();
         
-        final Map<String, Object> map = new HashMap<String, Object>();
+        final Map<String, Object> map = new TreeMap<>();
         map.put("user", user);
         map.put("num", 1);
         
         JSONModel module = new AbstractJSONModel() {
             public void config() {
-                expose(map).withNameAndMapping("res", PostEntity.class);
+                expose(map).withName("res");
             }
         };
 
-        System.out.println(build(module));
     }
     
 
