@@ -42,10 +42,10 @@ public class JSONBuilderTest {
         assertEquals(expected, build(module));
 
         Writer fw = new StringWriter();
-        new JSONBuilder(module).build(fw);
+        new JSONBuilder().build(module, fw);
 //        try {
-//            fw = new FileWriter(new File("jsonty_resutl.json"));
-//            new JSONBuilder(module).build(fw);
+//            fw = new FileWriter(new File("jsonty_result.json"));
+//            new JSONBuilder().build(module, fw);
 //            fw.close();
 //        } catch (IOException e) {
 //            e.printStackTrace();
@@ -179,7 +179,7 @@ public class JSONBuilderTest {
   }
 
     private String build(JSONModel module){
-        return new JSONBuilder(module).build();
+        return new JSONBuilder().build(module);
     }
     
 }

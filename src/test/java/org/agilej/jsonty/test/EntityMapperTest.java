@@ -103,7 +103,7 @@ public class EntityMapperTest {
     }
 
     private String build(JSONModel module) {
-        return new JSONBuilder(module).build();
+        return new JSONBuilder().build(module);
     }
 
 }

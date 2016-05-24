@@ -15,7 +15,6 @@ import org.agilej.jsonty.JSONBuilder;
 import org.agilej.jsonty.JSONModel;
 import org.agilej.jsonty.mapping.Account;
 import org.agilej.jsonty.mapping.AccountEntity;
-import org.agilej.jsonty.model.Controller;
 import org.junit.Test;
 
 public class JSONBuilderExposeWithoutNameTest {
@@ -52,7 +51,7 @@ public class JSONBuilderExposeWithoutNameTest {
                 exposer.expose(account).withMapping(AccountEntity.class);
             }
         };
-        String json = new JSONBuilder(model).build();
+        String json = new JSONBuilder().build(model);
 
         String expected = "{" + jsonPair("username", "donny", true) + "}";
         assertEquals(expected, json);
@@ -61,7 +60,7 @@ public class JSONBuilderExposeWithoutNameTest {
 
 
     private String build(JSONModel module){
-        return new JSONBuilder(module).build();
+        return new JSONBuilder().build(module);
     }
 
     private JSONModel modelWith(final Object v) {
