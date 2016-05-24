@@ -1,11 +1,5 @@
 package org.agilej.jsonty.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,6 +11,8 @@ import org.agilej.jsonty.FieldBuilder;
 import org.agilej.jsonty.FieldExposer;
 import org.agilej.jsonty.mapping.DetailedUserEntity;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 
 public class FieldBuilderTest {
@@ -48,13 +44,15 @@ public class FieldBuilderTest {
         
         assertEquals("", fieldBuilder.getName());
         assertNull(fieldBuilder.getEntityClass());
-        
-        fieldBuilder.withName(null);
-        
-        assertNull(fieldBuilder.getName());
-        assertNull(fieldBuilder.getEntityClass());
-        
-        
+
+        try {
+            fieldBuilder.withName(null);
+            fail();
+        } catch (RuntimeException ex){
+
+        }
+
+
         fieldBuilder = new FieldBuilder(new int[]{1,3,5});
         fieldBuilder.withNameAndMapping("data", ExampleEntity.class);
 

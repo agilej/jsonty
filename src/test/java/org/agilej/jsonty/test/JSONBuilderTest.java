@@ -128,13 +128,12 @@ public class JSONBuilderTest {
   public void test_only_one_collection_data_with_name(){
       JSONModel module = new AbstractJSONModel() {
           public void config() {
-              expose(Arrays.asList(1, 2, 3)).withName(null);        //ints
+              expose(Arrays.asList(1, 2, 3)).withName("data");        //ints
           }
       };
       
-      String exptected = "{\"\":[1,2,3]}";
+      String exptected = "{\"data\":[1,2,3]}";
       assertEquals(exptected, build(module));
-
   }
     
     @Test

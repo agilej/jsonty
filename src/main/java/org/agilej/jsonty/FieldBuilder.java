@@ -12,7 +12,7 @@ public class FieldBuilder implements CustomizedFieldBuilder, FieldExposeResult{
 
     private boolean condition;
     private boolean hasCondition;
-    private boolean hasName;
+    private boolean hasName = false;
     private Environment env;
     
     public FieldBuilder(Object value) {
@@ -20,20 +20,30 @@ public class FieldBuilder implements CustomizedFieldBuilder, FieldExposeResult{
     }
 
     public ConditionalFieldBuilder withNameAndMapping(String name, Class<? extends EntityMapper> entityClass) {
+        if (name == null || entityClass == null) {
+            throw new RuntimeException("name and entityClass can't be null");
+        }
         this.hasName = true;
         this.name = name;
         this.entityClass = entityClass;
         return this;
     }
 
-    public ConditionalFieldBuilder withName(String string) {
-        return this.withNameAndMapping(string, null);
+    public ConditionalFieldBuilder withName(String name) {
+        if (name == null) {
+            throw new RuntimeException("name can't be null");
+        }
+        this.name = name;
+        this.hasName = true;
+        return this;
     }
     
     public ConditionalFieldBuilder withMapping(Class<? extends EntityMapper> entityClass) {
-        this.hasName = false;
+        if (entityClass == null) {
+            throw new RuntimeException("entityClass can't be null");
+        }
         this.entityClass = entityClass;
-        return this;        
+        return this;
     }
     
     @Override
