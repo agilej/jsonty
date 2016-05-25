@@ -132,8 +132,8 @@ public class JSONBuilderTest {
           }
       };
       
-      String exptected = "{\"data\":[1,2,3]}";
-      assertEquals(exptected, build(module));
+      String expected = "{\"data\":[1,2,3]}";
+      assertEquals(expected, build(module));
   }
     
     @Test
@@ -145,8 +145,8 @@ public class JSONBuilderTest {
           }
       };
       
-      String exptected = "[1,-2,3]";
-      assertEquals(exptected, build(module));
+      String expected = "[1,-2,3]";
+      assertEquals(expected, build(module));
 
   }
     
@@ -159,8 +159,8 @@ public class JSONBuilderTest {
           }
       };
       
-      String exptected = "{\"null\":null}";
-      assertEquals(exptected, build(module));
+      String expected = "{\"null\":null}";
+      assertEquals(expected, build(module));
 
   }
     

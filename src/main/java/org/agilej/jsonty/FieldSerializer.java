@@ -164,40 +164,6 @@ public class FieldSerializer {
         _collection(writer, elements);
     }
 
-    /**
-     * json value for array represent
-     *
-     */
-    private Object _array1(Writer writer, Object value) {
-        write(writer, JSONS.ARRAY_START);
-
-        int length = Array.getLength(value);
-        if (length > 0) {
-            List<Object> values = new ArrayList<Object>();
-
-            Object first = Array.get(value, 0);
-            if(fieldExposeResult.hasEntityType()){
-                buildEntity(writer, first, fieldExposeResult.getEntityClass());
-            } else {
-                value0(writer, first);
-            }
-
-            for (int i = 1; i < length; i ++) {
-                write(writer, JSONS.FIELD_SEPARATOR);
-                Object arrayElement = Array.get(value, i);
-                if(fieldExposeResult.hasEntityType()){
-                    buildEntity(writer, arrayElement, fieldExposeResult.getEntityClass());
-                } else {
-                    value0(writer, arrayElement);
-                }
-            }
-
-        }
-
-        write(writer, JSONS.ARRAY_END);
-        return null;
-    }
-
     private void buildEntity(Writer writer, Object value, Class<? extends EntityMapper> clz) {
         try {
             EntityMapper entity = clz.newInstance();
