@@ -46,7 +46,7 @@ Then write your code ^_^:
     String json = new JSONBuilder().build(model);
 
     //or write to stream
-    new JSONBuilder(model).build(model, writer);
+    new JSONBuilder().build(model, writer);
 
 ```
 
