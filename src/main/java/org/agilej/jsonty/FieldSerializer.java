@@ -1,8 +1,11 @@
 package org.agilej.jsonty;
 
 import org.agilej.jsonty.util.JSONStringFormatter;
+import org.agilej.jsonty.util.StringBuilderWriter;
 import org.agilej.jsonty.util.StringUtil;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -22,52 +25,76 @@ public class FieldSerializer {
     }
 
     public String toJson(){
+        StringBuilderWriter writer = new StringBuilderWriter();
+        this.toJson(writer);
+        return writer.toString();
+    }
+
+    public void toJson(Writer writer){
         String name = fieldExposeResult.getName();
         name = (name != null) ? name : "";
-        return contentWithNameAndValue(name, fieldExposeResult.getValue(), fieldExposeResult.hasName());
+        contentWithNameAndValue(writer, name, fieldExposeResult.getValue(), fieldExposeResult.hasName());
     }
 
-    private String contentWithNameAndValue(Object name, Object value, boolean hasName){
-        if(hasName){
-            return JSONStringFormatter.quoteWithEscape(name.toString()) + JSONS.NAME_VALUE_SEPARATOR + value0(value);
-        } else {
-            return value0(value).toString();
+    private void write(Writer writer, String content){
+        try {
+            writer.write(content);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private Object value0(Object value){
+    private void contentWithNameAndValue(Writer writer, Object name, Object value, boolean hasName){
+        if(hasName){
+            write(writer, JSONStringFormatter.quoteWithEscape(name.toString()));
+            write(writer, JSONS.NAME_VALUE_SEPARATOR);
+            value0(writer, value);
+        } else {
+            value0(writer, value);
+        }
+    }
+
+    private void value0(Writer writer, Object value) {
         if(value == null){
-            //TODO deal with null
-            return "null";
+            write(writer, "null");
+            return ;
         }
         if(value instanceof Boolean){
-            return value.toString();
+            write(writer, value.toString());
+            return ;
         }
         if(value instanceof Number){
-            return value;
+            write(writer, value.toString());
+            return ;
         }
 
         if(value instanceof String){
-            return JSONStringFormatter.quoteWithEscape(value.toString());
+            write(writer, JSONStringFormatter.quoteWithEscape(value.toString()));
+            return ;
         }
 
         if(!fieldExposeResult.isValueIterable() && fieldExposeResult.hasEntityType()){
-            return buildEntity(fieldExposeResult.getValue(), fieldExposeResult.getEntityClass());
+            buildEntity(writer, fieldExposeResult.getValue(), fieldExposeResult.getEntityClass());
+            return;
         }
 
         if(fieldExposeResult.isArrayValue()) {
-            return _array(value);
+            _array(writer, value);
+            return ;
         }
 
         if(fieldExposeResult.isCollectionValue()){
-            return _collection(value);
+            _collection(writer, value);
+            return ;
         }
 
         if(value instanceof Map){
-            return _map(value);
+            _map(writer, value);
+            return ;
         }
 
-        return JSONStringFormatter.quoteWithEscape(value.toString());
+        write(writer, JSONStringFormatter.quoteWithEscape(value.toString()));
+
     }
 
     /**
@@ -75,114 +102,115 @@ public class FieldSerializer {
      *
      */
     @SuppressWarnings({"unchecked" })
-    private Object _map(Object value) {
-        //TODO map data, for map data, should disable entity mapping,
-        //can explicit set hasEntityType to false
-        Map map = (Map)value;
-        StringBuilder sb = new StringBuilder();
-        sb.append(JSONS.OBJECT_START);
+    private void _map(Writer writer, Object value) {
+        write(writer, JSONS.OBJECT_START);
 
-
-        List<String> collector = new ArrayList<String>();
-        Iterator<Map.Entry<Object, Object>> it = map.entrySet().iterator();
-        while(it.hasNext()){
-            Map.Entry<Object, Object> entry = it.next();
-            collector.add(contentWithNameAndValue(entry.getKey(),   entry.getValue(), true));
+        Iterator<Map.Entry<Object, Object>> it = ((Map)value).entrySet().iterator();
+        if (it.hasNext()) {
+            Map.Entry<Object, Object> first = it.next();
+            contentWithNameAndValue(writer, first.getKey(),   first.getValue(), true);
+            while(it.hasNext()){
+                write(writer, JSONS.FIELD_SEPARATOR);
+                Map.Entry<Object, Object> entry = it.next();
+                contentWithNameAndValue(writer, entry.getKey(),   entry.getValue(), true);
+            }
         }
 
-/*
-        FList<String> collector = $(map.entrySet()).map(new Function<Map.Entry<Object, Object>, String>() {
-            @Override
-            public String apply(Map.Entry<Object, Object> entry) {
-                return contentWithNameAndValue(entry.getKey(),   entry.getValue(), true);
-            }
-        });
-*/
-        sb.append(StringUtil.join(collector, JSONS.FIELD_SEPARATOR));
-        sb.append(JSONS.OBJECT_END);
-        return sb.toString();
+        write(writer, JSONS.OBJECT_END);
     }
 
     /**
      * json value for collection represent
      */
     @SuppressWarnings({"unchecked" })
-    private Object _collection(Object value) {
-        //TODO data with normal type, fall back to gson?
-
-        Collection collection = (Collection)value;
-
+    private void _collection(Writer writer, Object value) {
         final boolean hasEntityType = fieldExposeResult.hasEntityType();
-        StringBuilder sb = new StringBuilder();
-        sb.append(JSONS.ARRAY_START);
+        write(writer, JSONS.ARRAY_START);
 
-
-        List<Object> values = new ArrayList<Object>();
-        Iterator<Object> it = collection.iterator();
-        while(it.hasNext()){
+        Iterator<Object> it = ((Collection)value).iterator();
+        if (it.hasNext()) {
+            Object first = it.next();
             if(hasEntityType){
-                values.add(buildEntity(it.next(), fieldExposeResult.getEntityClass()));
+                buildEntity(writer, first, fieldExposeResult.getEntityClass());
             } else {
-                values.add(value0(it.next()));
+                value0(writer, first);
             }
+
+            while(it.hasNext()){
+                write(writer, JSONS.FIELD_SEPARATOR);
+
+                if(hasEntityType){
+                    buildEntity(writer, it.next(), fieldExposeResult.getEntityClass());
+                } else {
+                    value0(writer, it.next());
+                }
+            }
+
+
         }
 
-/*
-        List<Object> values = $(collection).map(new Function<Object, Object>(){
-            @Override
-            public Object apply(Object value) {
-                return hasEntityType ? buildEntity(value, fieldExposeResult.getEntityClass()) : value0(value);
-            }
-
-        });
-*/
-        sb.append(StringUtil.join(values, JSONS.FIELD_SEPARATOR));
-        sb.append(JSONS.ARRAY_END);
-        return sb.toString();
+        write(writer, JSONS.ARRAY_END);
     }
 
     /**
      * json value for array represent
      *
      */
-    private Object _array(Object value) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(JSONS.ARRAY_START);
-
-        List<Object> values = new ArrayList<Object>();
-        int length = Array.getLength(value);
-        for (int i = 0; i < length; i ++) {
-            Object arrayElement = Array.get(value, i);
-            if(fieldExposeResult.hasEntityType()){
-                values.add(buildEntity(arrayElement, fieldExposeResult.getEntityClass()));
-            } else {
-                values.add(value0(arrayElement));
-            }
+    private void _array(Writer writer, Object value) {
+        List<Object> elements = new ArrayList<Object>();
+        for (int i = 0; i < Array.getLength(value); i++) {
+            elements.add(Array.get(value, i));
         }
-
-        sb.append(StringUtil.join(values, JSONS.FIELD_SEPARATOR));
-        sb.append(JSONS.ARRAY_END);
-        return sb.toString();
+        _collection(writer, elements);
     }
 
     /**
-     *
-     * json value for a customized entity type present
+     * json value for array represent
      *
      */
-    @SuppressWarnings({"unchecked" })
-    private Object buildEntity(Object value, Class<? extends EntityMapper> clz) {
+    private Object _array1(Writer writer, Object value) {
+        write(writer, JSONS.ARRAY_START);
+
+        int length = Array.getLength(value);
+        if (length > 0) {
+            List<Object> values = new ArrayList<Object>();
+
+            Object first = Array.get(value, 0);
+            if(fieldExposeResult.hasEntityType()){
+                buildEntity(writer, first, fieldExposeResult.getEntityClass());
+            } else {
+                value0(writer, first);
+            }
+
+            for (int i = 1; i < length; i ++) {
+                write(writer, JSONS.FIELD_SEPARATOR);
+                Object arrayElement = Array.get(value, i);
+                if(fieldExposeResult.hasEntityType()){
+                    buildEntity(writer, arrayElement, fieldExposeResult.getEntityClass());
+                } else {
+                    value0(writer, arrayElement);
+                }
+            }
+
+        }
+
+        write(writer, JSONS.ARRAY_END);
+        return null;
+    }
+
+    private void buildEntity(Writer writer, Object value, Class<? extends EntityMapper> clz) {
         try {
             EntityMapper entity = clz.newInstance();
             FieldsContainer holder = new FieldsContainer();
             entity.config(value, holder, fieldExposeResult.getEnvironment());
-            return holder.build();
+            holder.build(writer);
         } catch (InstantiationException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
 }
