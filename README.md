@@ -69,6 +69,26 @@ Don't like other json serialization library(for example Gson) use annotation to 
     }
 ```
 
+#### entity mapping for iterable value
+
+Entity Mapping also support iterable value such as `Collection` and `Array`, you just call `FieldExposer#expose(xxx)` as normal; jsonty will transfer it to one json array value with every element mapped with given entity mapping type.
+
+For example:
+
+```java
+
+    // suppose you have iterable values as 
+
+    List<Account> accountList = ...;
+    Account[] accountArray = ...;
+
+    // you can expose as normal
+    exposer.expose(accountList).withNameAndMapping("accounts", AccountEntity.class);
+    
+    exposer.expose(accountArray).withNameAndMapping("accounts", AccountEntity.class);
+
+```
+
 ## Extra
 
 You can set a condition for field expose use `when` or `unless`
