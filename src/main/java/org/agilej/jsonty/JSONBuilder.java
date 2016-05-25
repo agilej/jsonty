@@ -9,14 +9,7 @@ import java.io.Writer;
  * Build json with one {@link JSONModel}, this class is thread safe!
  */
 public class JSONBuilder {
-
-//    private FieldsContainer fieldsContainer = new FieldsContainer();
-//
-//
-//    public JSONBuilder(JSONModel model) {
-//        model.config(this.fieldsContainer);
-//    }
-
+    
     public JSONBuilder(){
 
     }

@@ -43,10 +43,10 @@ Then write your code ^_^:
     }
 
     //to json
-    String json = new JSONBuilder(model).build();
+    String json = new JSONBuilder().build(model);
 
-    //or write to stream, not implemented yet
-    new JSONBuilder(model).build(writer);
+    //or write to stream
+    new JSONBuilder(model).build(model, writer);
 
 ```
 
@@ -105,6 +105,5 @@ You can alse pass enviroment use `plusEnv`and do some extra calculation while ex
 
 These features are considered to be implement in version 0.2.
 
-* Buid json to `Writer` directly
 * Beauty json print support
 
