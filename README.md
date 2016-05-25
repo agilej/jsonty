@@ -120,6 +120,9 @@ You can alse pass enviroment use `plusEnv`and do some extra calculation while ex
     }
 ```
 
+## Example
+
+For more example, please go to [examples](https://github.com/agilej/jsonty/wiki/Expose-Example)
 
 ## TODO
 
