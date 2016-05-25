@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class FieldExpositionHolderTest {
+public class FieldsContainerTest {
 
     private FieldsContainer holder;
     
@@ -20,19 +20,11 @@ public class FieldExpositionHolderTest {
     public void setup(){
         holder = new FieldsContainer();
     }
-    
-    @Test
-    public void test_constructor(){
-        assertEquals(0, holder.fieldsCount());
-    }
 
     @Test
     public void test_expose(){
         holder.expose(1);
-        assertEquals(1, holder.fieldsCount());
-        
         holder.expose("s").withName("string");
-        assertEquals(2, holder.fieldsCount());
         
         Integer value = (Integer) holder.exposedFields().get(0).getValue();
         assertTrue(value == 1);

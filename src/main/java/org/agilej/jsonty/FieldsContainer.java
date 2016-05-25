@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * A FieldExposer implementation which store all fields.
+ */
 public class FieldsContainer implements FieldExposer{
 
     private List<FieldBuilder> fieldBuilders = new ArrayList<FieldBuilder>();
@@ -17,10 +20,6 @@ public class FieldsContainer implements FieldExposer{
         FieldBuilder fieldBuilder = new FieldBuilder(value);
         this.fieldBuilders.add(fieldBuilder);
         return fieldBuilder;
-    }
-    
-    public int fieldsCount(){
-        return exposedFields().size();
     }
     
     public List<FieldBuilder> exposedFields(){
@@ -64,8 +63,6 @@ public class FieldsContainer implements FieldExposer{
         if(needOuterObjectWrapper){
             write(writer, JSONS.OBJECT_END);
         }
-
-
     }
 
     private boolean needOuterObjectWrap(){
@@ -117,8 +114,6 @@ public class FieldsContainer implements FieldExposer{
         try {
             writer.append(value);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
