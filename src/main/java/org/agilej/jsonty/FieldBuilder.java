@@ -1,5 +1,6 @@
 package org.agilej.jsonty;
 
+import java.io.Writer;
 import java.util.Collection;
 import java.util.Map;
 
@@ -124,9 +125,9 @@ public class FieldBuilder implements CustomizedFieldBuilder, FieldExposeResult{
     public Object getValue() {
         return value;
     }
-    
-    public String toJson(){
-        return new FieldSerializer(this).toJson();
+
+    public void toJson(Writer writer){
+        new FieldSerializer(this).toJson(writer);
     }
 
     /**

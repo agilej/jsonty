@@ -37,10 +37,11 @@ public class FieldsContainer implements FieldExposer{
         return sw.toString();
     }
 
+
     /**
      * build final json result and write to given writer
      */
-    public String build(Writer writer) {
+    public void build(Writer writer) {
         boolean needOuterObjectWrapper = needOuterObjectWrap();
 
         if(needOuterObjectWrapper){
@@ -52,19 +53,19 @@ public class FieldsContainer implements FieldExposer{
         Iterator<FieldBuilder> it = fieldBuildersNeedExpose.iterator();
         if (it.hasNext()){
             FieldBuilder firstFieldBuilder = it.next();
-            write(writer, firstFieldBuilder.toJson());
+            firstFieldBuilder.toJson(writer);
         }
         while (it.hasNext()){
             FieldBuilder fieldBuilder = it.next();
             write(writer, JSONS.FIELD_SEPARATOR);
-            write(writer, fieldBuilder.toJson());
+            fieldBuilder.toJson(writer);
         }
 
         if(needOuterObjectWrapper){
             write(writer, JSONS.OBJECT_END);
         }
 
-        return writer.toString();
+
     }
 
     private boolean needOuterObjectWrap(){
