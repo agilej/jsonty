@@ -10,7 +10,7 @@ For Maven project:
   <dependency>
       <groupId>org.agilej</groupId>
       <artifactId>jsonty</artifactId>
-      <version>0.1</version>
+      <version>0.2</version>
   </dependency>
 ```
 
@@ -18,7 +18,7 @@ For Gradle Project
 
 ```groovy
   
-  compile group: 'org.agilej', name: 'jsonty', version: '0.1'
+  compile group: 'org.agilej', name: 'jsonty', version: '0.2'
 
 ```
 
@@ -103,7 +103,7 @@ You can alse pass enviroment use `plusEnv`and do some extra calculation while ex
 
 ## TODO
 
-These features are considered to be implement in version 0.2.
+These features are considered to be implement in version 0.3.
 
 * Beauty json print support
 
