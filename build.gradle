@@ -16,7 +16,6 @@ tasks.withType(JDepend) {
 
 dependencies {
     testCompile 'junit:junit:4.0'
-    testCompile 'org.agilej:fava:0.1'
 }
 
 task wrapper(type: Wrapper) {
