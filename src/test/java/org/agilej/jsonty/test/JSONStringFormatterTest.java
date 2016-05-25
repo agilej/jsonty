@@ -1,5 +1,7 @@
-package org.agilej.jsonty.util;
+package org.agilej.jsonty.test;
 
+import org.agilej.jsonty.util.JSONStringFormatter;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -10,7 +12,7 @@ public class JSONStringFormatterTest {
     @Test
     public void test_quote_with_escape(){
 
-        assertEquals(quote(""), JSONStringFormatter.quoteWithEscape(null));
+        Assert.assertEquals(quote(""), JSONStringFormatter.quoteWithEscape(null));
 
         assertEquals(quote(""), JSONStringFormatter.quoteWithEscape(""));
 
