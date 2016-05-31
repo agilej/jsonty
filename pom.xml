@@ -4,7 +4,7 @@
     <groupId>org.agilej</groupId>
     <artifactId>jsonty</artifactId>
     <packaging>jar</packaging>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.3</version>
     <description>Jsonty is a simple json library.</description>
     <name>Jsonty</name>
     <url>http://maven.apache.org</url>
