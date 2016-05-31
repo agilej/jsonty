@@ -10,7 +10,7 @@ For Maven project:
   <dependency>
       <groupId>org.agilej</groupId>
       <artifactId>jsonty</artifactId>
-      <version>0.2</version>
+      <version>0.3</version>
   </dependency>
 ```
 
@@ -18,7 +18,7 @@ For Gradle Project
 
 ```groovy
   
-  compile group: 'org.agilej', name: 'jsonty', version: '0.2'
+  compile group: 'org.agilej', name: 'jsonty', version: '0.3'
 
 ```
 
@@ -126,7 +126,7 @@ For more example, please go to [examples](https://github.com/agilej/jsonty/wiki/
 
 ## TODO
 
-These features are considered to be implement in version 0.3.
+These features are considered to be implement.
 
 * Beauty json print support
 
