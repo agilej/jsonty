@@ -35,7 +35,7 @@ public class JSONBuilderExposeWithoutNameTest {
         assertEquals("\"one\"", build(modelWith("one")));
         assertEquals("[1,2,3]", build(modelWith(Arrays.asList(1,2,3))));
 
-        Map map = new HashMap<>();
+        Map map = new HashMap();
         map.put("one", 1);
         assertEquals("{\"one\":1}", build(modelWith(map)));
     }

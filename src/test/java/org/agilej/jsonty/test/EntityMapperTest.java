@@ -72,7 +72,7 @@ public class EntityMapperTest {
     public void test_mapping_with_map_value(){
         final User user = domainUser();
         
-        final Map<String, Object> map = new TreeMap<>();
+        final Map<String, Object> map = new TreeMap<String, Object>();
         map.put("user", user);
         map.put("num", 1);
         

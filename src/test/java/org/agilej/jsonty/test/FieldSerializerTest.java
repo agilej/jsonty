@@ -74,7 +74,7 @@ public class FieldSerializerTest {
 
     @Test
     public void test_collection(){
-        List list = new ArrayList<>();
+        List list = new ArrayList();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -117,7 +117,7 @@ public class FieldSerializerTest {
         Account account = new Account();
         account.login = "json";
 
-        List<Account> list = new ArrayList<>();
+        List<Account> list = new ArrayList<Account>();
         list.add(account);
         list.add(account);
 

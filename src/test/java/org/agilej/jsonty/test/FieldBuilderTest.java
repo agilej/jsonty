@@ -25,7 +25,7 @@ public class FieldBuilderTest {
         builder = new FieldBuilder(2);
         assertEquals(2, builder.getValue());
 
-        List<String> object = new ArrayList<>();
+        List<String> object = new ArrayList<String>();
         builder = new FieldBuilder(object);
         assertSame(object, builder.getValue());
     }
