@@ -4,18 +4,10 @@ repositories {
 }
 
 apply plugin: 'java'
-apply plugin: 'jdepend'
 apply plugin: 'findbugs'
 
-tasks.withType(JDepend) {
-    reports {
-        xml.enabled = false
-        text.enabled = true
-    }
- }
-
 dependencies {
-    testCompile 'junit:junit:4.0'
+    testCompile 'junit:junit:4.11'
 }
 
 task wrapper(type: Wrapper) {
