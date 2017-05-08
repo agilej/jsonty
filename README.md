@@ -1,4 +1,4 @@
-[![Build Status](https://drone.io/github.com/agilej/jsonty/status.png)](https://drone.io/github.com/agilej/jsonty/latest)
+[![Build Status](https://travis-ci.org/agilej/jsonty.svg?branch=master)](https://travis-ci.org/agilej/jsonty)
 
 Make fun with JSON serializer.
 
@@ -52,7 +52,7 @@ Then write your code ^_^:
 
 ## Entity Mapping
 
-Don't like other json serialization library(for example Gson) use annotation to declare json object's fields,  Jsonty use  entity-mapping strategy. All you need is implement `EntityMapper` interface, define fields will be exposed to json result; then use this mapping with `expose(xx).withMapping()`.
+As you know some json serialization libraries (Gson, Jackson) use annotation to declare json object's fields, but Jsonty doesn't, it use  entity-mapping strategy. All you need is implement `EntityMapper` interface, define fields will be exposed to json result; then use this mapping with `expose(xx).withMapping()`, with this strategy you can expose different fields for one object in different scenario.
 
 ```java
 
